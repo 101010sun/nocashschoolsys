@@ -1,8 +1,8 @@
 # board
 this is a board
 
--python git clone
- 終端機: 新增終端機
+-python git clone\n
+ 終端機: 新增終端機\r\n
  在終端機打 cd D:(or C:) \要存專案的地址
  輸入 git clone 網址
 
