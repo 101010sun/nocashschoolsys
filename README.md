@@ -1,5 +1,4 @@
-# board
-this is a board
+# 記分板版
 
 * python git clone
   > 終端機: 新增終端機  
