@@ -18,7 +18,7 @@
   > 在...裡選提取  
 
 * pip install 更新
-  > python -m pip install -upgrade pip wheel setuptools
+  > python -m pip install --upgrade pip
   > pip install kivy //開發套件
 
 ## 專題
