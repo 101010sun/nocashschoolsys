@@ -23,6 +23,7 @@
   > pip install Cython==0.20  
   
 ## PYTHON 環境安裝
+* 老師上課範例https://github.com/hjhsu/105DBSys_ProjectExample
 * python -m pip install docutils pygments pypiwin32 kivy.deps.sdl2 kivy.deps.glew
 * python -m pip install kivy.deps.gstreamer --extra-index-url https://kivy.org/downloads/packages/simple/
 * python -m pip install kivy.deps.angle
