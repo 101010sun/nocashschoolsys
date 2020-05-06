@@ -1,5 +1,19 @@
-import test
-test.main()
-print("Second Module's Name: {}".format(__name__))
-print('hello')
-print("hello")
+from kivy.app import App
+from kivy.uix.label import Label
+from kivy.lang import Builder
+
+Builder.load_string('''
+<SimpleLabel>:
+    text: 'Hello World'
+    ''')
+
+
+class SimpleLabel(Label):
+    pass
+
+
+class SampleApp(App):
+    def build(self):
+        return SimpleLabel()
+
+SampleApp().run()
