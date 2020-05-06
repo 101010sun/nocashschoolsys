@@ -18,8 +18,9 @@
   > 在...裡選提取  
 
 * pip install 更新
-  > python -m pip install --upgrade pip
-  > pip install kivy //開發套件
+  > python -m pip install --upgrade pip  
+  > pip install kivy  
+  > pip install Cython==0.20  
 
 ## 專題
 * 介紹：  
