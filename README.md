@@ -21,6 +21,12 @@
   > python -m pip install --upgrade pip  
   > pip install kivy  
   > pip install Cython==0.20  
+  
+## PYTHON 環境安裝
+* python -m pip install docutils pygments pypiwin32 kivy.deps.sdl2 kivy.deps.glew
+* python -m pip install kivy.deps.gstreamer --extra-index-url https://kivy.org/downloads/packages/simple/
+* python -m pip install kivy.deps.angle
+* python -m pip install kivy
 
 ## 專題
 * 介紹：  
