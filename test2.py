@@ -5,7 +5,7 @@ from kivy.lang import Builder
 Builder.load_string('''
 <SimpleLabel>:
     text: 'Hello World'
-    ''')
+''')
 
 
 class SimpleLabel(Label):
@@ -16,4 +16,5 @@ class SampleApp(App):
     def build(self):
         return SimpleLabel()
 
-SampleApp().run()
+if __name__ == "__main__":
+    SampleApp().run()
