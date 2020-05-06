@@ -17,6 +17,10 @@
   > 點左邊第三個圖案(分支圖案)  
   > 在...裡選提取  
 
+* pip install 更新
+  > python -m pip install -upgrade pip wheel setuptools
+  > pip install kivy //開發套件
+
 ## 專題
 * 介紹：  
   我們專題為關於籃球紀錄APP，其內容為比賽分析資料包含:球隊戰績、個人表現數據表、籃球攻守紀錄、得失分、歷屆比賽成果。  
