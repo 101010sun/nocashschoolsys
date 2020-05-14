@@ -44,4 +44,6 @@
 
 * 球員數據
 * 球隊數據
-* 歷屆紀錄表
+* 歷屆紀錄表  
+
+https://drive.google.com/open?id=1aAF-rbr3r4fE_4MhyHVXinjmwBM4Ktvf
