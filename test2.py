@@ -13,11 +13,17 @@ def do_job():
     l.config(text='do '+str(counter))
     counter += 1
 
+def clean():
+    l.pack_forget()
+
+
 menubar = tk.Menu(window)
 querymenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label='查詢', menu=querymenu)
 rankmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label='排行', menu=rankmenu)
+cleanmenu = tk.Menu(menubar, tearoff=0)
+menubar.add_cascade(label='清空', menu=cleanmenu)
 
 querymenu.add_command(label='球員數據', command=do_job) #缺command
 querymenu.add_command(label='球隊數據', command=do_job) #缺command
@@ -33,6 +39,8 @@ rankmenu.add_separator()
 rankmenu.add_command(label='三分球%', command=do_job)
 rankmenu.add_command(label='投籃%', command=do_job)
 rankmenu.add_command(label='罰球%', command=do_job)
+
+cleanmenu.add_command(label='清空', command=clean)
 
 window.config(menu=menubar)
 window.mainloop()
