@@ -1,32 +1,38 @@
 import tkinter as tk
 
-window = tk.Tk() #建立主視窗window
+window = tk.Tk()
 window.title('board')
-window.geometry('400x300')
-window.configure(background='white')
+window.geometry('500x300')
 
-top_frame = tk.Frame(window) #建立top群
-top_frame.pack()
-bottom_frame = tk.Frame(window) #建立bottom群
-bottom_frame.pack(side=tk.BOTTOM)
-# 建立事件處理函式
-def echo_hello():
-    result = "查詢結果等等..."
-    result_label.configure(text=result)
+l = tk.Label(window, text='    ', bg='blue')
+l.pack()
 
-left_button = tk.Button(top_frame, text='球員數據', fg='red')
-left_button.pack(side=tk.LEFT)
+counter = 0
+def do_job():
+    global counter
+    l.config(text='do '+str(counter))
+    counter += 1
 
-middle_button = tk.Button(top_frame, text='球隊數據', fg='green')
-middle_button.pack(side=tk.LEFT)
+menubar = tk.Menu(window)
+querymenu = tk.Menu(menubar, tearoff=0)
+menubar.add_cascade(label='查詢', menu=querymenu)
+rankmenu = tk.Menu(menubar, tearoff=0)
+menubar.add_cascade(label='排行', menu=rankmenu)
 
-right_button = tk.Button(top_frame, text='排行查詢', fg='blue')
-right_button.pack(side=tk.LEFT)
+querymenu.add_command(label='球員數據', command=do_job) #缺command
+querymenu.add_command(label='球隊數據', command=do_job) #缺command
+querymenu.add_separator()
+querymenu.add_command(label='歷屆紀錄表', command=do_job) #缺command
 
+rankmenu.add_command(label='得分', command=do_job)
+rankmenu.add_command(label='籃板', command=do_job)
+rankmenu.add_command(label='助攻', command=do_job)
+rankmenu.add_command(label='阻攻', command=do_job)
+rankmenu.add_command(label='抄截', command=do_job)
+rankmenu.add_separator()
+rankmenu.add_command(label='三分球%', command=do_job)
+rankmenu.add_command(label='投籃%', command=do_job)
+rankmenu.add_command(label='罰球%', command=do_job)
 
-result_label = tk.Button(bottom_frame, text='', fg='black')
-result_label.pack(side=tk.BOTTOM)
-bottom_button = tk.Button(bottom_frame, text='查詢', fg='black', command=echo_hello)
-bottom_button.pack(side=tk.BOTTOM)
-
+window.config(menu=menubar)
 window.mainloop()
