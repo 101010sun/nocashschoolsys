@@ -1,10 +1,12 @@
+import kivy
+kivy.require('1.10.0')
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.lang import Builder
 
 Builder.load_string('''
 <SimpleLabel>:
-    text: 'Hello World'
+    text: 'Hello World!!!'
 ''')
 
 
