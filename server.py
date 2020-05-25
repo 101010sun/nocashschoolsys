@@ -12,12 +12,12 @@ try:
     cursor.execute(sql)
     data = cursor.fetchall()
     for row in data:
-        d1 = row[0]
-        d2 = row[1]
-        d3 = row[2]
-        d4 = row[3]
-        d5 = row[4]
-    print ("d1=%s,d2=%s,d3=%s,d4=%sd5=%s" % (d1, d2, d3, d4, d5))
+        d0 = row[0]
+        d1 = row[1]
+        d2 = row[2]
+        d3 = row[3]
+        d4 = row[4]
+    print ("d0=%s,d1=%s,d2=%s,d3=%sd4=%s" % (d0, d1, d2, d3, d4))
 except:
     print ("Error: unable to fetch data")
 conn.close()
