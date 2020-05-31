@@ -1,5 +1,9 @@
 import tkinter as tk
 
+def get_player():
+    player = [['one',1],['two',2],['three',3],['four',4],['five',5],['six',6]]
+    return player
+
 class RecordBoard(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
@@ -57,6 +61,7 @@ class Page_ChoosePlayer(tk.Frame):
         tk.Frame.__init__(self, master)
         tk.Frame.configure(self, bg='red')
         tk.Label(self, text="選擇5個上場球員", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+        player = get_player()
         tk.Button(self, text="Go back to start page", command=lambda: master.switch_frame(StartPage)).pack()
 
 if __name__ == "__main__":
