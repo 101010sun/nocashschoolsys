@@ -52,11 +52,12 @@ class RecordBoard(tk.Tk):
         def page_board():
                     tk.Label(object_frame,text="記分板版", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
 
+        #清空object_frame裡面的東西
         def clean_frame():
             for widget in object_frame.winfo_children():
                 widget.destroy()
 
-        menubar = tk.Menu(menu_frame) #宣告一個Menu的frame
+        menubar = tk.Menu(menu_frame) #宣告一個Menu的frame裡面有: 模式 設定 查詢 排行
         funcmenu = tk.Menu(menubar, tearoff=0) 
         menubar.add_cascade(label='模式', menu=funcmenu)
         setmenu = tk.Menu(menubar, tearoff=0)
@@ -65,12 +66,12 @@ class RecordBoard(tk.Tk):
         menubar.add_cascade(label='查詢', menu=querymenu)
         rankmenu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label='排行', menu=rankmenu)
-
+        #查詢選項的下拉式選單
         querymenu.add_command(label='球員數據', command=lambda: [clean_frame(), page_playerdata()])
         querymenu.add_command(label='球隊數據', command=lambda: [clean_frame(), page_teamdata()])
         querymenu.add_separator() #分隔線
         querymenu.add_command(label='歷屆紀錄表', command=lambda: [clean_frame(), page_recoardtable()])
-
+        #排行選項的下拉式選單
         rankmenu.add_command(label='得分', command=lambda: [clean_frame(), page_getrank()])
         rankmenu.add_command(label='籃板', command=lambda: [clean_frame(), page_basketrank()])
         rankmenu.add_command(label='助攻', command=lambda: [clean_frame(), page_soporank()])
@@ -80,14 +81,15 @@ class RecordBoard(tk.Tk):
         rankmenu.add_command(label='三分球%', command=lambda: [clean_frame(), page_thirdgraderank()])
         rankmenu.add_command(label='投籃%', command=lambda: [clean_frame(), page_throwrank()])
         rankmenu.add_command(label='罰球%', command=lambda: [clean_frame(), page_punishrank()])
-
+        #設定選項的下拉式選單
         setmenu.add_command(label='新增球員', command=lambda: [clean_frame(), page_newplayer()])
         setmenu.add_command(label='修改球員資料', command=lambda: [clean_frame(), page_changedata()])
-
+        #模式選項的下拉式選單
         funcmenu.add_command(label='記分板版', command=lambda: [clean_frame(), page_board()])
 
         self.config(menu=menubar)
     
 if __name__ == "__main__":
     window = RecordBoard()
+    window.iconbitmap('./board.ico')
     window.mainloop()
