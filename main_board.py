@@ -47,10 +47,42 @@ class RecordBoard(tk.Tk):
             tk.Label(object_frame,text="新增球員", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
 
         def page_changedata():
-                    tk.Label(object_frame,text="修改資料", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+                tk.Label(object_frame,text="修改資料", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
 
         def page_board():
-                    tk.Label(object_frame,text="記分板版", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            def do_print():
+                print('%s' %(dateString.get()))
+                print('%s' %(gameString.get()))
+                print('%s' %(oppschoolString.get()))
+                print('%s' %(oppdepString.get()))
+                
+            tk.Label(object_frame, text="開始記錄", font=('Arial', 18, "bold")).grid(column=0, row=0, sticky=tk.W)
+            #Label-文字標籤
+            dateLabel = tk.Label(object_frame, text='日期:')
+            gameLabel = tk.Label(object_frame, text='盃賽名稱:')
+            oppschoolLabel = tk.Label(object_frame, text='對手學校')
+            oppdepLabel = tk.Label(object_frame, text='對手系名')
+
+            dateLabel.grid(column=0, row=1, sticky=tk.W)
+            gameLabel.grid(column=0, row=2, sticky=tk.W)
+            oppschoolLabel.grid(column=0, row=3, sticky=tk.W)
+            oppdepLabel.grid(column=0, row=4, sticky=tk.W)
+            #定義文字輸入框裡的文字物件
+            dateString = tk.StringVar()
+            gameString = tk.StringVar()
+            oppschoolString = tk.StringVar()
+            oppdepString = tk.StringVar()
+            dateEntry = tk.Entry(object_frame, show=None, font=('Arial', 14), textvariable=dateString)
+            gameEntry = tk.Entry(object_frame, show=None, font=('Arial', 14), textvariable=gameString)
+            oppschoolEntry = tk.Entry(object_frame, show=None, font=('Arial', 14), textvariable=oppschoolString)
+            oppdepEntry = tk.Entry(object_frame, show=None, font=('Arial', 14), textvariable=oppdepString)
+
+            dateEntry.grid(column=1, row=1, padx=10)
+            gameEntry.grid(column=1, row=2, padx=10)
+            oppschoolEntry.grid(column=1, row=3, padx=10)
+            oppdepEntry.grid(column=1, row=4, padx=10)
+
+            tk.Button(object_frame, text='確定', command=lambda: [clean_frame(), do_print()]).grid(column=1, row=5, sticky=tk.N)
 
         #清空object_frame裡面的東西
         def clean_frame():

@@ -4,7 +4,7 @@ def get_player():
     player = [['one',1],['two',2],['three',3],['four',4],['five',5],['six',6]]
     return player
 
-class RecordBoard(tk.Tk):
+class WriteBoard(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self._frame = None
@@ -54,7 +54,7 @@ class StartPage(tk.Frame):
         oppschoolEntry.grid(column=1, row=3, padx=10)
         oppdepEntry.grid(column=1, row=4, padx=10)
 
-        tk.Button(self, text='確定', command=lambda: [master.switch_frame(Page_ChoosePlayer), do_print()]).grid(column=0, row=5, sticky=tk.W)
+        tk.Button(self, text='確定', command=lambda: [master.switch_frame(Page_ChoosePlayer), do_print()]).grid(column=1, row=5, sticky=tk.N)
 
 class Page_ChoosePlayer(tk.Frame):
     def __init__(self, master):
