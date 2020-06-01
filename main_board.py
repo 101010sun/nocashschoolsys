@@ -92,4 +92,5 @@ class RecordBoard(tk.Tk):
 if __name__ == "__main__":
     window = RecordBoard()
     window.iconbitmap('./board.ico')
+    window.configure(bg='Tan')
     window.mainloop()
