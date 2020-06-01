@@ -9,7 +9,7 @@ class RecordBoard(tk.Tk):
             object_frame.destroy()
         object_frame = new_frame
         object_frame.pack()
-        
+
     def __init__(self):
         tk.Tk.__init__(self)
         self.geometry('500x300')
@@ -25,10 +25,6 @@ class RecordBoard(tk.Tk):
             global counter
             l.config(text='do '+str(counter))
             counter += 1
-
-        def clean():
-            for widget in object_frame.winfo_children():
-                widget.destroy()
 
         menubar = tk.Menu(menu_frame) #宣告一個Menu的frame
         funcmenu = tk.Menu(menubar, tearoff=0) 
