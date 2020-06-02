@@ -30,7 +30,7 @@ def player_info(sql1):
     try:
         cursor.execute(sql1)
         data = cursor.fetchall()
-        print ("sql1:")
+        print ("sql1: ")
         for row in data:
             d0 = row[0]
             d1 = row[1]
