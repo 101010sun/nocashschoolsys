@@ -1,5 +1,5 @@
 import tkinter as tk
-
+import server
 class RecordBoard(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
@@ -7,7 +7,7 @@ class RecordBoard(tk.Tk):
         self.title("記分板板")
         menu_frame = tk.Frame(self)
         menu_frame.pack(side=tk.TOP)
-        object_frame = tk.Frame(self)
+        object_frame = tk.Frame(self,width=200,height=200)
         object_frame.pack()
 
         def page_playerdata():
@@ -50,9 +50,9 @@ class RecordBoard(tk.Tk):
             tk.Label(object_frame,text="修改資料", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
 
         def page_startboard():
-            tk.Button(object_frame, text='開始記錄', command=lambda: [clean_frame(), page_board()]).pack()
+            tk.Button(object_frame, text='開始記錄', width=20, height=10, command=lambda: [clean_frame(), page_boardgetgameinfo()]).pack()
 
-        def page_board():
+        def page_boardgetgameinfo():
             def do_print():
                 print('%s' %(dateString.get()))
                 print('%s' %(gameString.get()))
@@ -85,7 +85,11 @@ class RecordBoard(tk.Tk):
             oppschoolEntry.grid(column=1, row=3, padx=10)
             oppdepEntry.grid(column=1, row=4, padx=10)
 
-            tk.Button(object_frame, text='確定', command=lambda: [clean_frame(), do_print()]).grid(column=1, row=5, sticky=tk.N)
+            tk.Button(object_frame, text='確定', command=lambda: [clean_frame(), do_print(), page_boardchoosplayer()]).grid(column=1, row=5, sticky=tk.N)
+    
+        def page_boardchoosplayer():
+            data = server.online_player()
+            print(data)
 
         #清空object_frame裡面的東西
         def clean_frame():
@@ -120,7 +124,7 @@ class RecordBoard(tk.Tk):
         setmenu.add_command(label='新增球員', command=lambda: [clean_frame(), page_newplayer()])
         setmenu.add_command(label='修改球員資料', command=lambda: [clean_frame(), page_changedata()])
         #模式選項的下拉式選單
-        funcmenu.add_command(label='記分板版', command=lambda: [clean_frame(), page_board()])
+        funcmenu.add_command(label='記分板版', command=lambda: [clean_frame(), page_startboard()])
 
         self.config(menu=menubar)
     

@@ -9,8 +9,7 @@ conn = pymysql.connect(
 )
 cursor = conn.cursor()
 
-def player_info():
-    sql1 ='SELECT * FROM (SELECT * FROM 球員 LEFT JOIN 退休球員 USING (學號) LEFT JOIN 隊長 USING (學號)) t1 LEFT JOIN (SELECT 學號,COUNT(學號) as 出賽場次 FROM 球員比賽表現 GROUP BY 學號) t2 USING(學號);'
+def player_info(sql1):
     try:
         cursor.execute(sql1)
         data = cursor.fetchall()
@@ -145,7 +144,7 @@ def show_record(date,game_name,competitor_school,competitor_dept_name):#有條�
         return None
 
 def online_player():
-    sql16='SELECT 學號,背號 FROM 球員 LEFT JOIN 退休球員 USING(學號) where 退休學年 is NULL'
+    sql16 = 'SELECT 學號,背號 FROM 球員 LEFT JOIN 退休球員 USING(學號) WHERE 退休學年 is NULL'
     try:
         cursor.execute(sql16)
         data = cursor.fetchall()
