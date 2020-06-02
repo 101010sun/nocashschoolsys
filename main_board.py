@@ -47,7 +47,10 @@ class RecordBoard(tk.Tk):
             tk.Label(object_frame,text="新增球員", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
 
         def page_changedata():
-                tk.Label(object_frame,text="修改資料", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            tk.Label(object_frame,text="修改資料", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+
+        def page_startboard():
+            tk.Button(object_frame, text='開始記錄', command=lambda: [clean_frame(), page_board()]).pack()
 
         def page_board():
             def do_print():

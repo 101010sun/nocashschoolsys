@@ -65,5 +65,5 @@ class Page_ChoosePlayer(tk.Frame):
         tk.Button(self, text="Go back to start page", command=lambda: master.switch_frame(StartPage)).pack()
 
 if __name__ == "__main__":
-    window = RecordBoard()
+    window = WriteBoard()
     window.mainloop()
