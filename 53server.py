@@ -1,6 +1,7 @@
 #-*-coding:UTF-8 -*-
 import pymysql
 
+sql=' '
 conn = pymysql.connect(
     host='localhost',
     user='yuan',
@@ -8,4 +9,3 @@ conn = pymysql.connect(
     database='testdb'
 )
 cursor = conn.cursor()
-
