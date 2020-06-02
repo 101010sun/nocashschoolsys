@@ -24,6 +24,7 @@ sql13='SELECT 球員比賽表現.學號, ((sum(表現.三分球中)+sum(表現.�
 sql14='SELECT 球員比賽表現.學號, (sum(表現.罰球中)/sum(表現.罰球投)*100) as 罰球命中率 FROM 球員比賽表現 LEFT JOIN 表現 ON 球員比賽表現.編號 = 表現.編號 GROUP BY 球員比賽表現.學號 ORDER BY 罰球命中率 DESC;'
 
 sql15='SELECT * FROM 球員比賽表現 LEFT JOIN 球員 USING(學號) LEFT JOIN 表現 USING(編號) WHERE 日期=%s and 盃賽名稱=%s and 對手學校=%s and 對手系名=%s;'
+sql16='SELECT 學號,背號 FROM 球員 LEFT JOIN 退休球員 USING(學號) where 退休學年 is NULL'
 
 def player_info(sql1):
     try:
@@ -236,7 +237,7 @@ def penalty_mvp(sql14):
     except:
         print ("sql14 error")
 
-def show_record(sql15,date,game_name,competitor_school,competitor_dept_name):
+def show_record(sql15,date,game_name,competitor_school,competitor_dept_name):#有條件輸入
     try:
         cursor.execute(sql15, (date,game_name,competitor_school,competitor_dept_name))
         data = cursor.fetchall()
@@ -270,6 +271,15 @@ def show_record(sql15,date,game_name,competitor_school,competitor_dept_name):
     except:
         print ("sql15 error")
 
+def online_player(sql16):
+    try:
+        cursor.execute(sql16)
+        data = cursor.fetchall()
+        print ("sql16:")
+        print (data)
+    except:
+        print ("sql16 error")
+
 player_info(sql1)
 player_data_average(sql2)
 player_hit_rate(sql3)
@@ -284,5 +294,7 @@ intercept_mvp(sql11)
 three_point_rate(sql12)
 shoot_rate_mvp(sql13)
 penalty_mvp(sql14)
-show_record(sql15)
+#show_record(sql15) 有條件輸入
+online_player(sql16)
+
 conn.close()
