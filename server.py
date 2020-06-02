@@ -23,7 +23,7 @@ sql12='SELECT 球員比賽表現.學號, (sum(表現.三分球中)/sum(表現.�
 sql13='SELECT 球員比賽表現.學號, ((sum(表現.三分球中)+sum(表現.二分球中))/(sum(表現.三分球投)+sum(表現.二分球投))*100) as 投球命中率 FROM 球員比賽表現 LEFT JOIN 表現 ON 球員比賽表現.編號 = 表現.編號 GROUP BY 球員比賽表現.學號 ORDER BY 投球命中率 DESC;'
 sql14='SELECT 球員比賽表現.學號, (sum(表現.罰球中)/sum(表現.罰球投)*100) as 罰球命中率 FROM 球員比賽表現 LEFT JOIN 表現 ON 球員比賽表現.編號 = 表現.編號 GROUP BY 球員比賽表現.學號 ORDER BY 罰球命中率 DESC;'
 
-sql15='SELECT * FROM 球員比賽表現 LEFT JOIN 球員 USING(學號) LEFT JOIN 表現 USING(編號) WHERE 日期="2019-09-27" and 盃賽名稱="新生盃" and 對手學校="逢甲大學" and 對手系名="應數系";'
+sql15='SELECT * FROM 球員比賽表現 LEFT JOIN 球員 USING(學號) LEFT JOIN 表現 USING(編號) WHERE 日期=%s and 盃賽名稱=%s and 對手學校=%s and 對手系名=%s;'
 
 def player_info(sql1):
     try:
@@ -186,6 +186,7 @@ def intercept_mvp(sql11):
         cursor.execute(sql11)
         data = cursor.fetchall()
         print ("sql11:")
+        print (data)
         for row in data:
             d0 = row[0]
             d1 = row[1]
@@ -235,6 +236,40 @@ def penalty_mvp(sql14):
     except:
         print ("sql14 error")
 
+def show_record(sql15,date,game_name,competitor_school,competitor_dept_name):
+    try:
+        cursor.execute(sql15, (date,game_name,competitor_school,competitor_dept_name))
+        data = cursor.fetchall()
+        print ("sql15:")
+        print (data)
+        # for row in data:
+        #     d0 = row[0]
+        #     d1 = row[1]
+        #     d2 = row[2]
+        #     d3 = row[3]
+        #     d4 = row[4]
+        #     d5 = row[5]
+        #     d6 = row[6]
+        #     d7 = row[7]
+        #     d8 = row[8]
+        #     d9 = row[9]
+        #     d10 = row[10]
+        #     d11 = row[11]
+        #     d12 = row[12]
+        #     d13 = row[13]
+        #     d14 = row[14]
+        #     d15 = row[15]
+        #     d16 = row[16]
+        #     d17 = row[17]
+        #     d18 = row[18]
+        #     d19 = row[19]
+        #     d20 = row[20]
+        #     d21 = row[21]
+        #     d22 = row[22]
+        #     print ("%d,%s,%s,%s,%s,%s,%s,%d,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d" %(d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14,d15,d16,d17,d18,d19,d20,d21,d22))
+    except:
+        print ("sql15 error")
+
 player_info(sql1)
 player_data_average(sql2)
 player_hit_rate(sql3)
@@ -249,4 +284,5 @@ intercept_mvp(sql11)
 three_point_rate(sql12)
 shoot_rate_mvp(sql13)
 penalty_mvp(sql14)
+show_record(sql15)
 conn.close()
