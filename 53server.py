@@ -14,11 +14,24 @@ def new_data():
     try:
         cursor.execute(sql,())
     # 執行SQL语句
-   # 提交到資料庫系統執行
+    # 提交到資料庫系統執行
         conn.commit()
         print("insert a record into temp")
     except:
    # 發生異常錯誤時回復
         conn.rollback()
     
-new_data()
+def fix_data():
+    sql = "UPDATE `球員` SET `名字`="鎢絲圓", `學號`="d1267",`背號`=0,`入隊學年`="100" WHERE 球員.名字="鎢絲圓" and 球員.學號="d1267"and 球員.背號= 550 and 球員.入隊學年="118" "
+    try:
+        cursor.execute(sql,())
+    # 執行SQL语句
+    # 提交到資料庫系統執行
+        conn.commit()
+        print("insert a record into temp")
+    except:
+   # 發生異常錯誤時回復
+        conn.rollback()
+
+fix_data()
+
