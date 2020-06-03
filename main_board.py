@@ -8,7 +8,7 @@ classfont=('Arial', 18, "bold")
 class RecordBoard(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
-        self.geometry('600x400')
+        self.geometry('1000x600')
         self.title("記分板板")
         menu_frame = tk.Frame(self)
         menu_frame.pack(side=tk.TOP)
@@ -17,7 +17,7 @@ class RecordBoard(tk.Tk):
         object_frame2 = tk.Frame(self)
         object_frame2.pack()
 
-        def page_playerdata(): #球員數據頁面
+        def page_playerdata(): #球員數據頁面 我打好了
             def clean_smallframe(): #清空小frame裡的物件
                 for widget in playerinfo_frame1.winfo_children():
                     widget.destroy()
@@ -27,9 +27,9 @@ class RecordBoard(tk.Tk):
                     widget.destroy()
 
             def callbackFunc(event): #處理下拉式選單選取要顯示的資訊
+                clean_smallframe() #清除原本的東西
                 infomat=combo.get()
                 infomat = infomat.split(' ') #擷取學號
-                print(infomat[0])
                 data1 = server.player_info(infomat[0])
                 tk.Label(playerinfo_frame1,text="姓名", font=wordfont).grid(row=0,column=0)
                 tk.Label(playerinfo_frame1,text="背號", font=wordfont).grid(row=0,column=1)
@@ -52,7 +52,7 @@ class RecordBoard(tk.Tk):
                 tk.Label(playerinfo_frame2,text="抄截率", font=wordfont).grid(row=0,column=5)
                 tk.Label(playerinfo_frame2,text="犯規率", font=wordfont).grid(row=0,column=6)
                 tk.Label(playerinfo_frame2,text="失誤率", font=wordfont).grid(row=0,column=7)
-                if(data2 == None):
+                if(data2 == None): #還沒打好
                     tk.Label(playerinfo_frame2,text="還沒上場過", font=wordfont).grid(row=1,column=3)
                 else:
                     for i in range(1,9):
@@ -65,11 +65,14 @@ class RecordBoard(tk.Tk):
                 tk.Label(playerinfo_frame3,text="三分球命中率", font=wordfont).grid(row=0,column=0)
                 tk.Label(playerinfo_frame3,text="投籃命中率", font=wordfont).grid(row=0,column=1)
                 tk.Label(playerinfo_frame3,text="罰球命中率", font=wordfont).grid(row=0,column=2)
-                for i in range(1,4):
-                    if (data3[3][i] == None):
-                        tk.Label(playerinfo_frame3,text="目前還沒有表現", font=wordfont).grid(row=1,column=i-1)
-                    else:
-                        tk.Label(playerinfo_frame3,text=data3[3][i], font=wordfont).grid(row=1,column=i-1)
+                if(data3 == ()):
+                    tk.Label(playerinfo_frame3,text="還沒上場過", font=wordfont).grid(row=1,column=1)
+                else:
+                    for i in range(1,4):
+                        if(data3[0][i+2] == None):
+                            tk.Label(playerinfo_frame3,text="目前還沒有表現", font=wordfont).grid(row=1,column=i-1)
+                        else:
+                            tk.Label(playerinfo_frame3,text=data3[0][i+2], font=wordfont).grid(row=1,column=i-1)
             
             tk.Label(object_frame,text="球員數據", font=classfont).grid(row=0, column=1)
             tk.Label(object_frame,text="                        ", font=(18)).grid(row=0, column=2) #排版用的
@@ -82,9 +85,9 @@ class RecordBoard(tk.Tk):
             playerinfo_frame2.pack()
             playerinfo_frame3 = tk.Frame(object_frame2)
             playerinfo_frame3.pack()
-            combo.bind("<<ComboboxSelected>>", callbackFunc, clean_smallframe()) #選取之後顯示球員資料
+            combo.bind("<<ComboboxSelected>>", callbackFunc) #選取之後顯示球員資料
 
-        def page_teamdata(): #球隊數據頁面
+        def page_teamdata(): #球隊數據頁面 我打好了
             def clean_smallframe():
                 for widget in team_frame1.winfo_children():
                     widget.destroy()
@@ -141,12 +144,59 @@ class RecordBoard(tk.Tk):
             tk.Label(team_frame3, text=data3[0][1], font=wordfont).grid(row=1,column=1)
             tk.Label(team_frame3, text=data3[0][2], font=wordfont).grid(row=1,column=2)
 
-        def page_recoardtable():  #歷屆紀錄表
+        def page_recordtable():  #歷屆紀錄表 打好了有奇怪的東西
+            def clean_smallframe(): #清空小frame裡的物件
+                for widget in record_frame.winfo_children():
+                    widget.destroy()
+
+            def callbackFunc(event): #處理下拉式選單選取要顯示的資訊
+                clean_smallframe() #清空
+                infomat=combo.get()
+                infomat = infomat.split(' ') #擷取資料除掉空白鍵
+                data = server.show_record(infomat[0],infomat[1],infomat[2],infomat[3])
+                tk.Label(record_frame,text="姓名", font=wordfont).grid(row=0,column=0)
+                tk.Label(record_frame,text="背號", font=wordfont).grid(row=0,column=1)
+                tk.Label(record_frame,text="二分球投", font=wordfont).grid(row=0,column=2)
+                tk.Label(record_frame,text="二分球中", font=wordfont).grid(row=0,column=3)
+                tk.Label(record_frame,text="三分球投", font=wordfont).grid(row=0,column=4)
+                tk.Label(record_frame,text="三分球中", font=wordfont).grid(row=0,column=5)
+                tk.Label(record_frame,text="罰球投", font=wordfont).grid(row=0,column=6)
+                tk.Label(record_frame,text="罰球中", font=wordfont).grid(row=0,column=7)
+                tk.Label(record_frame,text="防守籃板", font=wordfont).grid(row=0,column=8)
+                tk.Label(record_frame,text="進攻籃板", font=wordfont).grid(row=0,column=9)
+                tk.Label(record_frame,text="助攻", font=wordfont).grid(row=0,column=10)
+                tk.Label(record_frame,text="阻攻", font=wordfont).grid(row=0,column=11)
+                tk.Label(record_frame,text="抄截", font=wordfont).grid(row=0,column=12)
+                tk.Label(record_frame,text="失誤", font=wordfont).grid(row=0,column=13)
+                tk.Label(record_frame,text="犯規", font=wordfont).grid(row=0,column=14)
+                tk.Label(record_frame,text="被犯", font=wordfont).grid(row=0,column=15)
+                for i in range(len(data)):
+                    tk.Label(record_frame,text=data[i][6], font=wordfont).grid(row=i+1,column=0) #姓名
+                    tk.Label(record_frame,text=data[i][7], font=wordfont).grid(row=i+1,column=1) #背號
+                    tk.Label(record_frame,text=data[i][9], font=wordfont).grid(row=i+1,column=2) #二分球投
+                    tk.Label(record_frame,text=data[i][10], font=wordfont).grid(row=i+1,column=3) #二分球中
+                    tk.Label(record_frame,text=data[i][11], font=wordfont).grid(row=i+1,column=4) #三分球投
+                    tk.Label(record_frame,text=data[i][12], font=wordfont).grid(row=i+1,column=5) #三分球中
+                    tk.Label(record_frame,text=data[i][13], font=wordfont).grid(row=i+1,column=6) #罰球投
+                    tk.Label(record_frame,text=data[i][14], font=wordfont).grid(row=i+1,column=7) #罰球中
+                    tk.Label(record_frame,text=data[i][15], font=wordfont).grid(row=i+1,column=8) #防守籃板
+                    tk.Label(record_frame,text=data[i][16], font=wordfont).grid(row=i+1,column=9) #進攻籃板
+                    tk.Label(record_frame,text=data[i][17], font=wordfont).grid(row=i+1,column=10) #助攻
+                    tk.Label(record_frame,text=data[i][18], font=wordfont).grid(row=i+1,column=11) #阻攻
+                    tk.Label(record_frame,text=data[i][19], font=wordfont).grid(row=i+1,column=12) #抄截
+                    tk.Label(record_frame,text=data[i][20], font=wordfont).grid(row=i+1,column=13) #失誤
+                    tk.Label(record_frame,text=data[i][21], font=wordfont).grid(row=i+1,column=14) #犯規
+                    tk.Label(record_frame,text=data[i][22], font=wordfont).grid(row=i+1,column=15) #被犯
+                
             tk.Label(object_frame,text="歷屆紀錄表", font=classfont).grid(row=0,column=1)
             tk.Label(object_frame,text="選擇要查詢的比賽").grid(row=1,column=0)
             tk.Label(object_frame,text="               ", font=(18)).grid(row=0, column=2) #排版用的
-            combo = ttk.Combobox(object_frame, values=server.online_player(), state="readonly") # 先放現有球員之後要改
+            combo = ttk.Combobox(object_frame, values=server.game_info(), state="readonly") #下拉式選單
             combo.grid(row=1,column=1)
+            record_frame = tk.Frame(object_frame2)
+            record_frame.pack()
+            combo.bind("<<ComboboxSelected>>", callbackFunc) #選取之後顯示球員資料
+
 
         def page_getrank(): #得分排行
             tk.Label(object_frame,text="得分KING", font=classfont).grid(row=0, column=1)
@@ -246,7 +296,7 @@ class RecordBoard(tk.Tk):
         querymenu.add_command(label='球員數據', command=lambda: [clean_frame(), page_playerdata()])
         querymenu.add_command(label='球隊數據', command=lambda: [clean_frame(), page_teamdata()])
         querymenu.add_separator() #分隔線
-        querymenu.add_command(label='歷屆紀錄表', command=lambda: [clean_frame(), page_recoardtable()])
+        querymenu.add_command(label='歷屆紀錄表', command=lambda: [clean_frame(), page_recordtable()])
         #排行選項的下拉式選單
         rankmenu.add_command(label='得分', command=lambda: [clean_frame(), page_getrank()])
         rankmenu.add_command(label='籃板', command=lambda: [clean_frame(), page_basketrank()])

@@ -40,7 +40,6 @@ def player_info(stu_id):
         return None
 
 #依球員學號顯示列出球員各項數據平均(得分、進攻籃板數、防守籃板數、助攻數、阻攻數、抄截數、犯規數、失誤數)
-#--這個要下where指令，由client傳入學號回傳此學號的球員資訊
 def player_data_average(stu_id):##
     sql2 ='SELECT 球員比賽表現.學號, (sum(表現.二分球中)*2 + sum(表現.三分球中)*3 + sum(表現.罰球中)*1)/count(球員比賽表現.學號) as 得分率, sum(表現.進攻籃板)/count(球員比賽表現.學號) as 進攻籃板率, sum(表現.防守籃板)/count(球員比賽表現.學號) as 防守籃板率, sum(表現.助攻)/count(球員比賽表現.學號) as 助攻率, sum(表現.阻攻)/count(球員比賽表現.學號) as 阻攻率, sum(表現.抄截)/count(球員比賽表現.學號) as 抄截率, sum(表現.犯規)/count(球員比賽表現.學號) as 犯規率, sum(表現.失誤)/count(球員比賽表現.學號) as 失誤率 FROM 球員比賽表現 LEFT JOIN 表現 ON 球員比賽表現.編號 = 表現.編號 GROUP BY 球員比賽表現.學號 WHERE 學號=%s'
     try:
