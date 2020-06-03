@@ -18,7 +18,7 @@ class RecordBoard(tk.Tk):
         object_frame2.pack()
 
         def page_playerdata(): #球員數據頁面
-            def clean_smallframe():
+            def clean_smallframe(): #清空小frame裡的物件
                 for widget in playerinfo_frame1.winfo_children():
                     widget.destroy()
                 for widget in playerinfo_frame2.winfo_children():
@@ -26,24 +26,24 @@ class RecordBoard(tk.Tk):
                 for widget in playerinfo_frame3.winfo_children():
                     widget.destroy()
 
-            def callbackFunc(event): #處理下拉式選單資訊
+            def callbackFunc(event): #處理下拉式選單選取要顯示的資訊
                 infomat=combo.get()
                 infomat = infomat.split(' ') #擷取學號
-                data1 = server.player_info()
+                print(infomat[0])
+                data1 = server.player_info(infomat[0])
                 tk.Label(playerinfo_frame1,text="姓名", font=wordfont).grid(row=0,column=0)
                 tk.Label(playerinfo_frame1,text="背號", font=wordfont).grid(row=0,column=1)
                 tk.Label(playerinfo_frame1,text="入隊學年", font=wordfont).grid(row=0,column=2)
                 tk.Label(playerinfo_frame1,text="退隊學年", font=wordfont).grid(row=0,column=3)
                 tk.Label(playerinfo_frame1,text="隊長", font=wordfont).grid(row=0,column=4)
                 tk.Label(playerinfo_frame1,text="上場次數", font=wordfont).grid(row=0,column=5)
+                for i in range(1,7):
+                    if(data1[0][i] == None):
+                        tk.Label(playerinfo_frame1,text="無", font=wordfont).grid(row=1,column=i-1)
+                    else:
+                        tk.Label(playerinfo_frame1,text=data1[0][i], font=wordfont).grid(row=1,column=i-1)
 
-                tk.Label(playerinfo_frame1,text=data1[0][1], font=wordfont).grid(row=1,column=0)
-                tk.Label(playerinfo_frame1,text=data1[0][2], font=wordfont).grid(row=1,column=1)
-                tk.Label(playerinfo_frame1,text=data1[0][3], font=wordfont).grid(row=1,column=2)
-                tk.Label(playerinfo_frame1,text=data1[0][4], font=wordfont).grid(row=1,column=3)
-                tk.Label(playerinfo_frame1,text=data1[0][5], font=wordfont).grid(row=1,column=4)
-
-                data2 = server.player_data_average()
+                data2 = server.player_data_average(infomat[0])
                 tk.Label(playerinfo_frame2,text="得分率", font=wordfont).grid(row=0,column=0)
                 tk.Label(playerinfo_frame2,text="進攻籃板率", font=wordfont).grid(row=0,column=1)
                 tk.Label(playerinfo_frame2,text="防守籃板率", font=wordfont).grid(row=0,column=2)
@@ -52,17 +52,16 @@ class RecordBoard(tk.Tk):
                 tk.Label(playerinfo_frame2,text="抄截率", font=wordfont).grid(row=0,column=5)
                 tk.Label(playerinfo_frame2,text="犯規率", font=wordfont).grid(row=0,column=6)
                 tk.Label(playerinfo_frame2,text="失誤率", font=wordfont).grid(row=0,column=7)
+                if(data2 == None):
+                    tk.Label(playerinfo_frame2,text="還沒上場過", font=wordfont).grid(row=1,column=3)
+                else:
+                    for i in range(1,9):
+                        if(data2[0][i]==None):
+                            tk.Label(playerinfo_frame2,text="無", font=wordfont).grid(row=1,column=i-1)
+                        else:
+                            tk.Label(playerinfo_frame2,text=data2[0][i], font=wordfont).grid(row=1,column=i-1)
 
-                tk.Label(playerinfo_frame2,text=data2[3][1], font=wordfont).grid(row=1,column=0)
-                tk.Label(playerinfo_frame2,text=data2[3][2], font=wordfont).grid(row=1,column=1)
-                tk.Label(playerinfo_frame2,text=data2[3][3], font=wordfont).grid(row=1,column=2)
-                tk.Label(playerinfo_frame2,text=data2[3][4], font=wordfont).grid(row=1,column=3)
-                tk.Label(playerinfo_frame2,text=data2[3][5], font=wordfont).grid(row=1,column=4)
-                tk.Label(playerinfo_frame2,text=data2[3][6], font=wordfont).grid(row=1,column=5)
-                tk.Label(playerinfo_frame2,text=data2[3][7], font=wordfont).grid(row=1,column=6)
-                tk.Label(playerinfo_frame2,text=data2[3][8], font=wordfont).grid(row=1,column=7)
-
-                data3 = server.player_hit_rate()
+                data3 = server.player_hit_rate(infomat[0])
                 tk.Label(playerinfo_frame3,text="三分球命中率", font=wordfont).grid(row=0,column=0)
                 tk.Label(playerinfo_frame3,text="投籃命中率", font=wordfont).grid(row=0,column=1)
                 tk.Label(playerinfo_frame3,text="罰球命中率", font=wordfont).grid(row=0,column=2)
@@ -75,7 +74,7 @@ class RecordBoard(tk.Tk):
             tk.Label(object_frame,text="球員數據", font=classfont).grid(row=0, column=1)
             tk.Label(object_frame,text="                        ", font=(18)).grid(row=0, column=2) #排版用的
             tk.Label(object_frame,text="選擇要查詢的球員學號和姓名").grid(row=1,column=0)
-            combo = ttk.Combobox(object_frame, values=server.online_player(), state="readonly") # 先放現有球員之後要改
+            combo = ttk.Combobox(object_frame, values=server.show_all_player(), state="readonly")  #下拉式選單
             combo.grid(row=1,column=1)
             playerinfo_frame1 = tk.Frame(object_frame2)
             playerinfo_frame1.pack()
