@@ -10,7 +10,7 @@ conn = pymysql.connect(
 cursor = conn.cursor()
 
 def new_data():
-    sql = "INSERT INTO 球員( 名字, 學號, 背號, 入隊學年 )VALUES('孫乙玲', 'D0782838', 10, '107')"
+    sql = "INSERT INTO 球員( 名字, 學號, 背號, 入隊學年 )VALUES(%s, %s, %s, %s)"
     try:
         cursor.execute(sql,())
     # 執行SQL语句
