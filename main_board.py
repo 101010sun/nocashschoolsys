@@ -3,6 +3,7 @@ from tkinter import ttk
 import server
 
 wordfont= ('Arial', 12)
+classfont=('Arial', 18, "bold")
 
 class RecordBoard(tk.Tk):
     def __init__(self):
@@ -13,6 +14,8 @@ class RecordBoard(tk.Tk):
         menu_frame.pack(side=tk.TOP)
         object_frame = tk.Frame(self)
         object_frame.pack()
+        object_frame2 = tk.Frame(self)
+        object_frame2.pack()
 
         def page_playerdata(): #球員數據頁面
             def clean_smallframe():
@@ -68,28 +71,92 @@ class RecordBoard(tk.Tk):
                         tk.Label(playerinfo_frame3,text="目前還沒有表現", font=wordfont).grid(row=1,column=i-1)
                     else:
                         tk.Label(playerinfo_frame3,text=data3[3][i], font=wordfont).grid(row=1,column=i-1)
-
-            tk.Label(object_frame,text="球員數據", font=('Arial', 18, "bold")).grid(row=0, column=1)
+            
+            tk.Label(object_frame,text="球員數據", font=classfont).grid(row=0, column=1)
             tk.Label(object_frame,text="                        ", font=(18)).grid(row=0, column=2) #排版用的
             tk.Label(object_frame,text="選擇要查詢的球員學號和姓名").grid(row=1,column=0)
             combo = ttk.Combobox(object_frame, values=server.online_player(), state="readonly") # 先放現有球員之後要改
             combo.grid(row=1,column=1)
-            playerinfo_frame1 = tk.Frame(self)
+            playerinfo_frame1 = tk.Frame(object_frame2)
             playerinfo_frame1.pack()
-            playerinfo_frame2 = tk.Frame(self)
+            playerinfo_frame2 = tk.Frame(object_frame2)
             playerinfo_frame2.pack()
-            playerinfo_frame3 = tk.Frame(self)
+            playerinfo_frame3 = tk.Frame(object_frame2)
             playerinfo_frame3.pack()
             combo.bind("<<ComboboxSelected>>", callbackFunc, clean_smallframe()) #選取之後顯示球員資料
 
-        def page_teamdata():
-            tk.Label(object_frame,text="球隊數據頁面", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+        def page_teamdata(): #球隊數據頁面
+            def clean_smallframe():
+                for widget in team_frame1.winfo_children():
+                    widget.destroy()
+                for widget in team_frame2.winfo_children():
+                    widget.destroy()
+                for widget in team_frame3.winfo_children():
+                    widget.destroy()
 
-        def page_recoardtable():
-            tk.Label(object_frame,text="歷屆紀錄表", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            tk.Label(object_frame,text="球隊數據頁面", font=classfont).grid(row=0)
+            data1 = server.game_score()
+            data2 = server.data_average()
+            data3 = server.team_hit_rate()
 
-        def page_getrank():
-            tk.Label(object_frame,text="得分排行", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            team_frame1 = tk.Frame(object_frame)
+            team_frame1.grid(row=1)
+            team_frame2 = tk.Frame(object_frame)
+            team_frame2.grid(row=2)
+            team_frame3 = tk.Frame(object_frame)
+            team_frame3.grid(row=3)
+
+            tk.Label(team_frame1, text="日期", font=wordfont).grid(row=0,column=0)
+            tk.Label(team_frame1, text="盃賽名稱", font=wordfont).grid(row=0,column=1)
+            tk.Label(team_frame1, text="對手學校", font=wordfont).grid(row=0,column=2)
+            tk.Label(team_frame1, text="對手系名", font=wordfont).grid(row=0,column=3)
+            tk.Label(team_frame1, text="我方得分", font=wordfont).grid(row=0,column=4)
+            tk.Label(team_frame1, text="對手得分", font=wordfont).grid(row=0,column=5)
+            for i in range(len(data1)):
+                tk.Label(team_frame1, text=data1[i][0], font=wordfont).grid(row=i+1,column=0)
+                tk.Label(team_frame1, text=data1[i][2], font=wordfont).grid(row=i+1,column=1)
+                tk.Label(team_frame1, text=data1[i][3], font=wordfont).grid(row=i+1,column=2)
+                tk.Label(team_frame1, text=data1[i][4], font=wordfont).grid(row=i+1,column=3)
+                tk.Label(team_frame1, text=data1[i][1], font=wordfont).grid(row=i+1,column=4)
+                tk.Label(team_frame1, text=data1[i][5], font=wordfont).grid(row=i+1,column=5)
+
+            tk.Label(team_frame2, text="得分率", font=wordfont).grid(row=0,column=0)
+            tk.Label(team_frame2, text="籃板率", font=wordfont).grid(row=0,column=1)
+            tk.Label(team_frame2, text="助攻率", font=wordfont).grid(row=0,column=2)
+            tk.Label(team_frame2, text="阻攻率", font=wordfont).grid(row=0,column=3)
+            tk.Label(team_frame2, text="抄截率", font=wordfont).grid(row=0,column=4)
+            tk.Label(team_frame2, text="犯規率", font=wordfont).grid(row=0,column=5)
+            tk.Label(team_frame2, text="失誤率", font=wordfont).grid(row=0,column=6)
+            tk.Label(team_frame2, text=data2[0][0], font=wordfont).grid(row=1,column=0)
+            tk.Label(team_frame2, text=data2[0][1], font=wordfont).grid(row=1,column=1)
+            tk.Label(team_frame2, text=data2[0][2], font=wordfont).grid(row=1,column=2)
+            tk.Label(team_frame2, text=data2[0][3], font=wordfont).grid(row=1,column=3)
+            tk.Label(team_frame2, text=data2[0][4], font=wordfont).grid(row=1,column=4)
+            tk.Label(team_frame2, text=data2[0][5], font=wordfont).grid(row=1,column=5)
+            tk.Label(team_frame2, text=data2[0][6], font=wordfont).grid(row=1,column=6)
+            
+            tk.Label(team_frame3, text="三分球命中率", font=wordfont).grid(row=0,column=0)
+            tk.Label(team_frame3, text="投籃命中率", font=wordfont).grid(row=0,column=1)
+            tk.Label(team_frame3, text="罰球命中率", font=wordfont).grid(row=0,column=2)
+            tk.Label(team_frame3, text=data3[0][0], font=wordfont).grid(row=1,column=0)
+            tk.Label(team_frame3, text=data3[0][1], font=wordfont).grid(row=1,column=1)
+            tk.Label(team_frame3, text=data3[0][2], font=wordfont).grid(row=1,column=2)
+
+        def page_recoardtable():  #歷屆紀錄表
+            tk.Label(object_frame,text="歷屆紀錄表", font=classfont).grid(row=0,column=1)
+            tk.Label(object_frame,text="選擇要查詢的比賽").grid(row=1,column=0)
+            tk.Label(object_frame,text="               ", font=(18)).grid(row=0, column=2) #排版用的
+            combo = ttk.Combobox(object_frame, values=server.online_player(), state="readonly") # 先放現有球員之後要改
+            combo.grid(row=1,column=1)
+
+        def page_getrank(): #得分排行
+            tk.Label(object_frame,text="得分KING", font=classfont).grid(row=0, column=1)
+            data = server.score_mvp()
+            tk.Label(object_frame,text="學號", font=wordfont).grid(row=1,column=0)
+            tk.Label(object_frame,text="總得分", font=wordfont).grid(row=1,column=1)
+            for i in range(0,3):
+                tk.Label(object_frame,text=data[i][0], font=wordfont).grid(row=i+2,column=0)
+                tk.Label(object_frame,text=data[i][1], font=wordfont).grid(row=i+2,column=1)
 
         def page_basketrank():
             tk.Label(object_frame,text="籃板排行", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
@@ -163,6 +230,8 @@ class RecordBoard(tk.Tk):
         #清空object_frame裡面的東西
         def clean_frame():
             for widget in object_frame.winfo_children():
+                widget.destroy()
+            for widget in object_frame2.winfo_children():
                 widget.destroy()
 
         menubar = tk.Menu(menu_frame) #宣告一個Menu的frame裡面有: 模式 設定 查詢 排行

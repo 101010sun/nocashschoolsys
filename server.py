@@ -10,6 +10,7 @@ conn = pymysql.connect(
 cursor = conn.cursor()
 
 #--需要一個函式沒有輸入值，回傳所有球員的姓名跟學號
+#--需要一個函示沒有輸入值，回傳所有比賽的日期盃賽名對手學校跟對手系名
 
 
 #依球員學號顯示背號、比賽場數、先發次數和顯示是否為退休球員和是否為隊長
@@ -45,6 +46,7 @@ def player_hit_rate():
     except:
         return None
 
+#列出球隊所有比賽的比數
 def game_score():
     sql4 = "SELECT * FROM (SELECT 球員比賽表現.日期,(sum(表現.二分球中)*2 + sum(表現.三分球中)*3 + sum(表現.罰球中)*1) as 我方得分 FROM 球員比賽表現 LEFT JOIN 表現 USING(編號) GROUP BY 球員比賽表現.日期) t1 LEFT JOIN (SELECT * FROM 比賽) t2 USING(日期);"
     try:
@@ -54,6 +56,7 @@ def game_score():
     except:
         return None
 
+#列出球隊各項數據平均(得分、籃板數、助攻數、阻攻數、抄截數、犯規數、失誤數)
 def data_average():
     sql5 ='SELECT (round(cast(sum(二分球中*2)+sum(三分球中*3)+sum(罰球中)as float)))/count(DISTINCT 日期) as 平均得分, (round(cast(sum(防守籃板)+sum(進攻籃板)as float)))/count(DISTINCT 日期) as 籃板平均, round(cast(sum(助攻)as float))/count(DISTINCT 日期) as 助攻平均, round(cast(sum(阻攻)as float))/count(DISTINCT 日期) as 阻攻平均, round(cast(sum(抄截)as float))/count(DISTINCT 日期) as 抄截平均, round(cast(sum(犯規)as float))/count(DISTINCT 日期) as 犯規平均, round(cast(sum(失誤)as float))/count(DISTINCT 日期) as 失誤平均 FROM 球員比賽表現 LEFT JOIN 表現 ON 表現.編號=球員比賽表現.編號;'
     try:
@@ -63,6 +66,7 @@ def data_average():
     except:
         return None
 
+#列出球隊命中率(三分球、投籃、罰球)
 def team_hit_rate():
     sql6 ='SELECT sum(二分球中)/sum(二分球投) as 二分命中率, sum(三分球中)/sum(三分球投) as 三分命中率, sum(罰球中)/sum(罰球投) as 罰球命中率 FROM 表現;'
     try:
@@ -72,6 +76,7 @@ def team_hit_rate():
     except:
         return None
 
+#--完蛋我只有用學號 但是要印出姓名跟背號 _|:o_/|=
 def score_mvp():
     sql7 ='SELECT 球員比賽表現.學號, (sum(表現.二分球中)*2 + sum(表現.三分球中)*3 + sum(表現.罰球中)*1) as 得分 FROM 球員比賽表現 LEFT JOIN 表現 ON 球員比賽表現.編號 = 表現.編號 GROUP BY 球員比賽表現.學號 ORDER BY 得分 DESC;'
     try:
