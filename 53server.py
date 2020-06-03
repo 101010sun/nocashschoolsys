@@ -22,9 +22,9 @@ def new_data():
         conn.rollback()
     
 def fix_data():
-    sql = "UPDATE `球員` SET `名字`="鎢絲圓", `學號`="d1267",`背號`=0,`入隊學年`="100" WHERE 球員.名字="鎢絲圓" and 球員.學號="d1267"and 球員.背號= 550 and 球員.入隊學年="118" "
+    sql = "UPDATE 球員 SET 名字 ='巧虎', 學號='a12345678',背號 = 11,入隊學年='106' WHERE 球員.名字='鎢圓圓'and 球員.學號='d1267'and 球員.背號 = 0 and 球員.入隊學年='900'"
     try:
-        cursor.execute(sql,())
+        cursor.execute(sql)
     # 執行SQL语句
     # 提交到資料庫系統執行
         conn.commit()
