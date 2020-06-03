@@ -144,7 +144,7 @@ class RecordBoard(tk.Tk):
             tk.Label(team_frame3, text=data3[0][1], font=wordfont).grid(row=1,column=1)
             tk.Label(team_frame3, text=data3[0][2], font=wordfont).grid(row=1,column=2)
 
-        def page_recordtable():  #歷屆紀錄表 打好了有奇怪的東西
+        def page_recordtable():  #歷屆紀錄表 打好了但是有奇怪的東西
             def clean_smallframe(): #清空小frame裡的物件
                 for widget in record_frame.winfo_children():
                     widget.destroy()
@@ -198,41 +198,99 @@ class RecordBoard(tk.Tk):
             combo.bind("<<ComboboxSelected>>", callbackFunc) #選取之後顯示球員資料
 
 
-        def page_getrank(): #得分排行
+        def page_getrank(): #得分排行 我打好了
             tk.Label(object_frame,text="得分KING", font=classfont).grid(row=0, column=1)
             data = server.score_mvp()
             tk.Label(object_frame,text="學號", font=wordfont).grid(row=1,column=0)
-            tk.Label(object_frame,text="總得分", font=wordfont).grid(row=1,column=1)
+            tk.Label(object_frame,text="背號", font=wordfont).grid(row=1,column=1)
+            tk.Label(object_frame,text="總得分", font=wordfont).grid(row=1,column=2)
             for i in range(0,3):
-                tk.Label(object_frame,text=data[i][0], font=wordfont).grid(row=i+2,column=0)
-                tk.Label(object_frame,text=data[i][1], font=wordfont).grid(row=i+2,column=1)
+                tk.Label(object_frame,text=data[i][1], font=wordfont).grid(row=i+2,column=0)
+                tk.Label(object_frame,text=data[i][2], font=wordfont).grid(row=i+2,column=1)
+                tk.Label(object_frame,text=data[i][3], font=wordfont).grid(row=i+2,column=2)
 
         def page_basketrank():
-            tk.Label(object_frame,text="籃板排行", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            tk.Label(object_frame,text="籃板KING", font=classfont).grid(row=0, column=1)
+            data = server.backboard_mvp()
+            tk.Label(object_frame,text="學號", font=wordfont).grid(row=1,column=0)
+            tk.Label(object_frame,text="背號", font=wordfont).grid(row=1,column=1)
+            tk.Label(object_frame,text="總籃板數", font=wordfont).grid(row=1,column=2)
+            for i in range(0,3):
+                tk.Label(object_frame,text=data[i][1], font=wordfont).grid(row=i+2,column=0)
+                tk.Label(object_frame,text=data[i][2], font=wordfont).grid(row=i+2,column=1)
+                tk.Label(object_frame,text=data[i][3], font=wordfont).grid(row=i+2,column=2)
         
         def page_soporank():
-            tk.Label(object_frame,text="助攻排行", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            tk.Label(object_frame,text="助攻KING", font=classfont).grid(row=0, column=1)
+            data = server.assist_mvp()
+            tk.Label(object_frame,text="學號", font=wordfont).grid(row=1,column=0)
+            tk.Label(object_frame,text="背號", font=wordfont).grid(row=1,column=1)
+            tk.Label(object_frame,text="總助攻數", font=wordfont).grid(row=1,column=2)
+            for i in range(0,3):
+                tk.Label(object_frame,text=data[i][1], font=wordfont).grid(row=i+2,column=0)
+                tk.Label(object_frame,text=data[i][2], font=wordfont).grid(row=i+2,column=1)
+                tk.Label(object_frame,text=data[i][3], font=wordfont).grid(row=i+2,column=2)
         
         def page_blockrank():
-            tk.Label(object_frame,text="阻攻排行", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            tk.Label(object_frame,text="阻攻KING", font=classfont).grid(row=0, column=1)
+            data = server.block_mvp()
+            tk.Label(object_frame,text="學號", font=wordfont).grid(row=1,column=0)
+            tk.Label(object_frame,text="背號", font=wordfont).grid(row=1,column=1)
+            tk.Label(object_frame,text="總阻攻數", font=wordfont).grid(row=1,column=2)
+            for i in range(0,3):
+                tk.Label(object_frame,text=data[i][1], font=wordfont).grid(row=i+2,column=0)
+                tk.Label(object_frame,text=data[i][2], font=wordfont).grid(row=i+2,column=1)
+                tk.Label(object_frame,text=data[i][3], font=wordfont).grid(row=i+2,column=2)
 
         def page_catchrank():
-            tk.Label(object_frame,text="抄截排行", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            tk.Label(object_frame,text="抄截KING", font=classfont).grid(row=0, column=1)
+            data = server.intercept_mvp()
+            tk.Label(object_frame,text="學號", font=wordfont).grid(row=1,column=0)
+            tk.Label(object_frame,text="背號", font=wordfont).grid(row=1,column=1)
+            tk.Label(object_frame,text="總抄截數", font=wordfont).grid(row=1,column=2)
+            for i in range(0,3):
+                tk.Label(object_frame,text=data[i][1], font=wordfont).grid(row=i+2,column=0)
+                tk.Label(object_frame,text=data[i][2], font=wordfont).grid(row=i+2,column=1)
+                tk.Label(object_frame,text=data[i][3], font=wordfont).grid(row=i+2,column=2)
 
         def page_thirdgraderank():
-            tk.Label(object_frame,text="三分球排行", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            tk.Label(object_frame,text="三分球KING", font=classfont).grid(row=0, column=1)
+            data = server.three_point_rate()
+            tk.Label(object_frame,text="學號", font=wordfont).grid(row=1,column=0)
+            tk.Label(object_frame,text="背號", font=wordfont).grid(row=1,column=1)
+            tk.Label(object_frame,text="三分球命中率", font=wordfont).grid(row=1,column=2)
+            for i in range(0,3):
+                tk.Label(object_frame,text=data[i][1], font=wordfont).grid(row=i+2,column=0)
+                tk.Label(object_frame,text=data[i][2], font=wordfont).grid(row=i+2,column=1)
+                tk.Label(object_frame,text=data[i][3], font=wordfont).grid(row=i+2,column=2)
 
         def page_throwrank():
-            tk.Label(object_frame,text="投籃排行", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            tk.Label(object_frame,text="投籃KING", font=classfont).grid(row=0, column=1)
+            data = server.shoot_rate_mvp()
+            tk.Label(object_frame,text="學號", font=wordfont).grid(row=1,column=0)
+            tk.Label(object_frame,text="背號", font=wordfont).grid(row=1,column=1)
+            tk.Label(object_frame,text="投球命中率", font=wordfont).grid(row=1,column=2)
+            for i in range(0,3):
+                tk.Label(object_frame,text=data[i][1], font=wordfont).grid(row=i+2,column=0)
+                tk.Label(object_frame,text=data[i][2], font=wordfont).grid(row=i+2,column=1)
+                tk.Label(object_frame,text=data[i][3], font=wordfont).grid(row=i+2,column=2)
 
-        def page_punishrank():
-            tk.Label(object_frame,text="罰球排行", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+        def page_punishrank(): #我打好了
+            tk.Label(object_frame,text="罰球KING", font=classfont).grid(row=0, column=1)
+            data = server.penalty_mvp()
+            tk.Label(object_frame,text="學號", font=wordfont).grid(row=1,column=0)
+            tk.Label(object_frame,text="背號", font=wordfont).grid(row=1,column=1)
+            tk.Label(object_frame,text="罰球命中率", font=wordfont).grid(row=1,column=2)
+            for i in range(0,3):
+                tk.Label(object_frame,text=data[i][1], font=wordfont).grid(row=i+2,column=0)
+                tk.Label(object_frame,text=data[i][2], font=wordfont).grid(row=i+2,column=1)
+                tk.Label(object_frame,text=data[i][3], font=wordfont).grid(row=i+2,column=2)
 
         def page_newplayer():
-            tk.Label(object_frame,text="新增球員", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            tk.Label(object_frame,text="新增球員", font=classfont).pack(side="top", fill="x", pady=5)
 
         def page_changedata():
-            tk.Label(object_frame,text="修改資料", font=('Arial', 18, "bold")).pack(side="top", fill="x", pady=5)
+            tk.Label(object_frame,text="修改資料", font=classfont).pack(side="top", fill="x", pady=5)
 
         def page_startboard():
             tk.Button(object_frame, text='開始記錄', width=20, height=10, command=lambda: [clean_frame(), page_boardgetgameinfo()]).pack()
