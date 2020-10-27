@@ -1,3 +1,2 @@
-print("10")
-print("I success")
-print("again")
+id = input('NID：')
+
