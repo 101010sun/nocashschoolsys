@@ -35,19 +35,19 @@ def insert_active(activename, average, credit, rank):
 def find_teacher():
     cursor = col_teacher.find({})
     data = [d for d in cursor]
-    print(data)
+    return(data)
 
 def find_student():
     cursor = col_student.find({})
     data = [d for d in cursor]
-    print(data)
+    return(data)
 
 def find_active():
     cursor = col_active.find({})
     data = [d for d in cursor]
-    print(data)
+    return(data)
 
 def find_organization():
     cursor = col_organization.find({})
     data = [d for d in cursor]
-    print(data)
+    return(data)
