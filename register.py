@@ -17,7 +17,7 @@ elif(identity == 2):
     name = str(input('姓名: '))
     department = str(input('系所: '))
     grade = int(input('年級: '))
-    sex = str(input('性別(Man\Woman): '))
+    sex = str(input('性別(Man/Woman): '))
     residence = str(input('居住地: '))
 
     server.insert_student(nid, name, department, grade, sex, residence)

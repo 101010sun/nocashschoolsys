@@ -28,9 +28,9 @@ def insert_organization(nid, organname):
     data = {'NID': nid, 'OrganName': organname}
     col_organization.insert_one(data)
 
-def insert_active(activename, average, credit, rank):
-    data = {'ActiveName': activename, 'Average': average, 'Credit': credit, 'Rank': rank}
-    col_active.insert_one({'ActiveName': activename, 'Average': average, 'Credit': credit, 'Rank': rank})
+def insert_active(nid, activename, average, credit, rank):
+    data = {'NID': nid, 'ActiveName': activename, 'Average': average, 'Credit': credit, 'Rank': rank}
+    col_active.insert_one(data)
 # find
 def find_teacher():
     cursor = col_teacher.find({})
