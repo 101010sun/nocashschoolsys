@@ -1,7 +1,7 @@
 # render_template: 樣式模板使用 HTML 撰寫，後台處理使用 Python
 # flask_pymongo:   連接資料庫
 # request:         request請求來與HTML互動
-from  flask import Flask, render_template
+from  flask import Flask, render_template, request
 from flask_pymongo import PyMongo
 import flask_pymongo
 
@@ -22,9 +22,10 @@ def query_user(NID):
         else: 
             return 'No user found!'
 #homepage
-@app.route("/")
+@app.route('/', methods=['GET'])
 def main():
-    return render_template('hello.html')
+     name = request.args.get('name')
+     return 'My name is {}'.format('10sun')
 
 if __name__ == "__main__":
     app.run(host ='127.0.0.1')
