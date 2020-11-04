@@ -1,6 +1,10 @@
-from flask import Flask, render_template
-import flask_pymongo
+# render_template: 樣式模板使用 HTML 撰寫，後台處理使用 Python
+# flask_pymongo:   連接資料庫
+# request:         request請求來與HTML互動
+from  flask import Flask, render_template
 from flask_pymongo import PyMongo
+import flask_pymongo
+
 
 app = Flask(__name__)
 # open debugger
