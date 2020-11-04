@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import flask_pymongo
 from flask_pymongo import PyMongo
 
@@ -19,8 +19,8 @@ def query_user(NID):
             return 'No user found!'
 #homepage
 @app.route("/")
-def hello():
-    return "Hello World!"
+def main():
+    return render_template('hello.html')
 
 if __name__ == "__main__":
     app.run(host ='127.0.0.1')
