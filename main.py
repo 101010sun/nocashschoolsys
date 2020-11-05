@@ -2,7 +2,7 @@
 # server.py       :連接資料庫
 # request         :request請求來與HTML互動
 from flask import Flask, render_template, url_for, request, session, redirect
-from flask import PyMongo
+from flask_pymongo import PyMongo
 import server
 import bcrypt
 
@@ -23,23 +23,38 @@ def index():
 #login
 @app.route('/login', methods=['POST'])
 def login():
-    users = mongo.db.users
+    users = mongo.db.student
     login_user = users.find_one({'NID': request.form['NID']})
     
     if login_user:
         if bcrypt.hashpw(request.form['NID'].encode('utf-8'), login_user['NID'].encode('utf-8')) == login_user['NID'].encode('utf-8'):
             session['NID'] = request.form['NID']
             return redirect(url_for('index'))
+    return 'Invalid NID combination'
 
 @app.route('/register', methods=['Get', 'POST'])
-def regis_submit():
+def register():
     if request.method == 'POST':
-        name = request.form.get('name')
-        dept = request.form.get('dept')
-        grade = request.form.get('grade')
-        sex = request.form.get('sex')
-        residence = request.form.get('residence')
-    return server.insert_student(nid, name, dept, grade, sex, residence)
+        users = mongo.db.student
+        existing_user = users.find_one({'NID': request.form['NID']})
+
+        if existing_user is None:
+            # print(request.form['NID'])
+            # print(request.form['Name'])
+            # print(request.form['Dept'])
+            # print(request.form['Average'])
+            # print(request.form['Rank'])
+            # print(request.form['Grade'])
+            # print(request.form['Sex'])
+            # print(request.form['Residence'])
+            server.insert_student(request.form['NID'], request.form['Name'], request.form['Dept'], int(request.form['Grade']), float(request.form['Average']), int(request.form['Rank']), request.form['Sex'], request.form['Residence'])
+            #session['NID'] = request.form['NID']
+            return redirect(url_for('index'))
+
+        return 'That NID already exists!'
+
+    return render_template('register.html')
+
 
 if __name__ == "__main__":
     app.run(host ='127.0.0.1')
