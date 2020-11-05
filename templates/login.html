@@ -1,2 +1,15 @@
-NID:
-<input type="text" name="欄位名稱"><br>
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>登入</title>
+  </head>
+
+  <body>
+    <form method="POST" action="{{ url_for('login') }}">
+      NID：<input type="text" name="NID">
+      <button type="submit" >提交</button>
+    </form>
+  </body>
+</html>
