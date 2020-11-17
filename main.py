@@ -43,7 +43,7 @@ def register():
         isteacher = teacher.find_one({'NID': nid})
         if isstudent is None and 'D' in nid:
             session['username'] = nid
-            return redirect(url_for('reg_student'))
+            return redirect(url_for('register_student'))
         elif isteacher is None and 'T' in nid:
             session['username'] = nid
             return redirect(url_for('reg_student'))
@@ -52,14 +52,16 @@ def register():
     return render_template('register.html')
 
 @app.route('/register/student', methods=['Get', 'POST'])
-def reg_student():
+def register_student():
     if request.method == 'POST':
         nid = session.get('username')
         if nid is not None and 'D' in nid:
-            server.insert_student(nid, request.form['Name'], request.form['Dept'], request.form['Grade'], request.form['Average'], request.form['Rank'], request.form['Sex'], request.form['Residence'])
-        # elif nid is not None and 'T' in nid:
-        #     server.insert_teacher(nid, request.form['Name'], request.form['Dept'])
-    return 'fail'
+            server.insert_student(nid, request.form['Name'], request.form['Dept'], int(request.form['Grade']), float(request.form['Average']), int(request.form['Rank']), request.form['Sex'], request.form['Residence'])
+            return redirect(url_for('index'))
+        return render_template('register_student.html')
+
+
+    return render_template('register_student.html')
 
 
 if __name__ == "__main__":
