@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>註冊</title>
-    <header>註冊</header>
+    <title>錢包</title>
   </head>
 
   <body>
-    <form method="POST" action="{{ url_for('register') }}">
+      <a href="register">註冊</a>
+    <form method="POST" action="{{ url_for('login') }}">
       NID：<input type="text" name="NID">
-      <button type="submit">下一步</button>
+      <button type="submit">提交</button>
     </form>
   </body>
 </html>

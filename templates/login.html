@@ -1,14 +1,18 @@
 
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>登入</title>
-</head>
-<body>
-    NID:
-<input type="text" name="欄位名稱"><br>
-<button type="button">登入</button>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>登入</title>
+    <header>登入</header>
+  </head>
+
+  <body>
+    <a href="register">註冊</a>
+    <form method="POST" action="{{ url_for('login') }}">
+      NID：<input type="text" name="NID">
+      <button type="submit">提交</button>
+    </form>
+  </body>
 </html>
