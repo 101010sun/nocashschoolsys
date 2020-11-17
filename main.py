@@ -1,7 +1,6 @@
 from flask import Flask, render_template, url_for, request, session, redirect
 from flask_pymongo import PyMongo
 import server
-import bcrypt
 import os
 
 app = Flask(__name__)
@@ -28,20 +27,24 @@ def login():
         if login_user is not None:
             session['username'] = request.form['NID']
             return redirect(url_for('index'))
-        return ''
+        return redirect(url_for('index'))
     return redirect(url_for('index'))
 
 @app.route('/register', methods=['Get', 'POST'])
 def register():
     if request.method == 'POST':
-        users = mongo.db.student
-        existing_user = users.find_one({'NID': request.form['NID']})
-
-        if existing_user is None:
-            server.insert_student(request.form['NID'], request.form['Name'], request.form['Dept'], int(request.form['Grade']), float(request.form['Average']), int(request.form['Rank']), request.form['Sex'], request.form['Residence'])
-            session['username'] = request.form['NID']
-            return redirect(url_for('index'))
-
+        student = mongo.db.student
+        teacher = mongo.db.teacher
+        nid = request.form['NID']
+        nid = nid.upper()
+        isstudent = student.find_one({'NID': nid})
+        isteacher = teacher.find_one({'NID': nid})
+        if isstudent is None and 'D' in nid:
+            session['username'] = nid
+            return render_template('register_student.html')
+        elif isteacher is None and 'T' in nid:
+            session['username'] = nid
+            return render_template('register_teacher.html')
         return 'That NID already exists!'
 
     return render_template('register.html')

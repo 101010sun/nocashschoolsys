@@ -3,16 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>登入</title>
+    <title>首頁</title>
   </head>
 
   <body>
-    <div class="topnav">
-      <a class="active" href="">Home</a>
-      <a href="#news">News</a>
-      <a href="#contact">Contact</a>
-      <a href="#about">About</a>
-    </div>
+      <a href="activity">活動</a>
+      <a href="moneybag">錢包</a>
+
     <form method="POST" action="{{ url_for('login') }}">
       NID：<input type="text" name="NID">
       <button type="submit" >提交</button>
