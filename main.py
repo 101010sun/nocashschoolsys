@@ -22,10 +22,13 @@ def index():
 @app.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
-        users = mongo.db.student
-        login_user = users.find_one({'NID': request.form['NID']})
-        if login_user is not None:
-            session['username'] = request.form['NID']
+        student = mongo.db.student
+        teacher = mongo.db.teacher
+        nid = request.form['NID'].upper()
+        isstudent = student.find_one({'NID': nid})
+        isteacher = teacher.find_one({'NID': nid})
+        if isstudent is not None or isteacher is not None:
+            session['username'] = nid
             return redirect(url_for('index'))
         return redirect(url_for('index'))
     return redirect(url_for('index'))
@@ -35,8 +38,7 @@ def register():
     if request.method == 'POST':
         student = mongo.db.student
         teacher = mongo.db.teacher
-        nid = request.form['NID']
-        nid = nid.upper()
+        nid = request.form['NID'].upper()
         isstudent = student.find_one({'NID': nid})
         isteacher = teacher.find_one({'NID': nid})
         if isstudent is None and 'D' in nid:
@@ -48,6 +50,10 @@ def register():
         return 'That NID already exists!'
 
     return render_template('register.html')
+
+@app.route('/register/student', methods=['Get', 'POST'])
+def register_student():
+    
 
 
 if __name__ == "__main__":

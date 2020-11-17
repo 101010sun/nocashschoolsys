@@ -10,7 +10,6 @@
   </head>
   <body>
     <form method="POST" action="{{ url_for('register') }}">
-      <label>NID：<input type="text" name="NID"><br></label>
       <label>姓名：<input type="text" name="Name"><br></label>
       <label>系別：<select name = "Dept">
         <option>請輸入系別</option>
@@ -49,46 +48,6 @@
         <option>財金系</option>
         <option>風保系</option>
         <option>財務工程與精算學程</option> 
-        </select><br></label>
-      <label>年級：
-      <select name="Grade">
-        <option>請選擇年級</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        </select><br></label>
-      <label>上學期班排:<input type="text" name="Rank"><br></label>
-      <label>總平均:<input type="text" name="Average"><br></label>
-      <label>
-        性別:
-        <input type="radio" name="Sex" value="Man">Man
-        <input type="radio" name="Sex" value="Woman">Woman<br>
-      </label>
-      <label>縣市:
-      <select name="Residence">
-        <option>請選擇縣市</option>
-        <option>台北市</option>
-        <option>新北市</option>
-        <option>桃園市</option>
-        <option>台中市</option>
-        <option>台南市</option>
-        <option>高雄市</option>
-        <option>新竹縣</option>
-        <option>苗栗縣</option>
-        <option>彰化縣</option>
-        <option>南投縣</option>
-        <option>雲林縣</option>
-        <option>嘉義縣</option>
-        <option>屏東縣</option>
-        <option>宜蘭縣</option>
-        <option>花蓮縣</option>
-        <option>台東縣</option>
-        <option>澎湖縣</option>
-        <option>金門縣</option>
-        <option>連江縣</option>    
         </select><br></label>
         <button type="submit" >提交</button>
       </form>
