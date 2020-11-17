@@ -20,16 +20,16 @@ def insert_teacher(nid, name, dept):
     data = {'NID': nid, 'Name': name, 'Dept': dept}
     col_teacher.insert_one(data)
 
-def insert_student(nid, name, dept, grade, sex, residence):
-    data = {'NID': nid, 'Name': name, 'Dept': dept, 'Grade': grade, 'Sex': sex, 'Residence': residence}
+def insert_student(nid, name, dept, grade, average, rank, sex, residence):
+    data = {'NID': nid, 'Name': name, 'Dept': dept, 'Grade': grade, 'Average': average, 'Rank': rank, 'Sex': sex, 'Residence': residence}
     col_student.insert_one(data)
 
 def insert_organization(nid, organname):
     data = {'NID': nid, 'OrganName': organname}
     col_organization.insert_one(data)
 
-def insert_active(nid, activename, average, credit, rank):
-    data = {'NID': nid, 'ActiveName': activename, 'Average': average, 'Credit': credit, 'Rank': rank}
+def insert_active(activename, average, credit, rank):
+    data = {'ActiveName': activename, 'Credit': credit}
     col_active.insert_one(data)
 # find
 def find_teacher():
