@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>活動</title>
+    <header>活動</header>
+  </head>
+
+  <body>
+    <h3>新增活動</h3>
+    <a href="home_page">返回</a>
+    <form method="POST" action="{{ url_for('activity_teacher') }}">
+      <label>活動名稱:<input type="text" name="ActiveName"></label><br>
+      <label>學分數:<input type="text" name="Credit"></label><br>
+      <button type="submit">新增</button>
+    </form>
+    <h3>活動列表</h3>
+
+  </body>
+</html>

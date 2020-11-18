@@ -79,5 +79,15 @@ def register_teacher():
 
     return render_template('register_teacher.html')
 
+@app.route('/activity_teacher', methods=['Get', 'POST'])
+def activity_teacher():
+    if request.method == 'POST':
+        nid = session.get('username')
+        if nid is not None:
+            server.insert_active(request.form['ActiveName'], int(request.form['Credit']))
+            return render_template('activity_teacher.html')
+        return redirect(url_for('login'))
+    return render_template('activity_teacher.html')
+
 if __name__ == "__main__":
     app.run(host ='127.0.0.1')
