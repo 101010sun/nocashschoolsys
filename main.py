@@ -12,11 +12,15 @@ app.config['SECRET_KEY'] = os.urandom(24)
 
 mongo = PyMongo(app)
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def index():
     if 'username' in session:
         return 'You are logged in as ' + session['username']
+
     return render_template('login.html')
+def logout():
+    if request.method == 'POST':
+        session['username'] = False
 
 
 @app.route('/login', methods=['GET','POST'])
