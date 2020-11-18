@@ -53,7 +53,7 @@ def register():
             return redirect(url_for('register_student'))
         elif isteacher is None and 'T' in nid:
             session['username'] = nid
-            return redirect(url_for('reg_student'))
+            return redirect(url_for('register_teacher'))
         return 'That NID already exists!'
 
     return render_template('register.html')
@@ -72,10 +72,11 @@ def register_student():
 def register_teacher():
     if request.method == 'POST':
         nid = session.get('username')
-        if nid is not None and 'D' in nid:
+        if nid is not None and 'T' in nid:
             server.insert_teacher(nid, request.form['Name'], request.form['Dept'])
             return redirect(url_for('index'))
-        return render_template('register_teacher.html')
+        return 'session is null' #render_template('register_teacher.html')
+
     return render_template('register_teacher.html')
 
 if __name__ == "__main__":
