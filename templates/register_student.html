@@ -9,8 +9,7 @@
     <title>學生註冊</title>
   </head>
   <body>
-    <form method="POST" action="{{ url_for('register') }}">
-      <label>NID：<input type="text" name="NID"><br></label>
+    <form method="POST" action="{{ url_for('register_student') }}">
       <label>姓名：<input type="text" name="Name"><br></label>
       <label>系別：<select name = "Dept">
         <option>請輸入系別</option>

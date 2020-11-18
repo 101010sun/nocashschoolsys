@@ -22,12 +22,15 @@ def index():
 @app.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
-        users = mongo.db.student
-        login_user = users.find_one({'NID': request.form['NID']})
-        if login_user is not None:
-            session['username'] = request.form['NID']
-            return redirect(url_for('index'))
-        return redirect(url_for('index'))
+        student = mongo.db.student
+        teacher = mongo.db.teacher
+        nid = request.form['NID'].upper()
+        isstudent = student.find_one({'NID': nid})
+        isteacher = teacher.find_one({'NID': nid})
+        if isstudent is not None or isteacher is not None:
+            session['username'] = nid
+            return render_template('home_page.html')
+        return render_template('login.html')
     return redirect(url_for('index'))
 
 @app.route('/register', methods=['Get', 'POST'])
@@ -35,19 +38,30 @@ def register():
     if request.method == 'POST':
         student = mongo.db.student
         teacher = mongo.db.teacher
-        nid = request.form['NID']
-        nid = nid.upper()
+        nid = request.form['NID'].upper()
         isstudent = student.find_one({'NID': nid})
         isteacher = teacher.find_one({'NID': nid})
         if isstudent is None and 'D' in nid:
             session['username'] = nid
-            return render_template('register_student.html')
+            return redirect(url_for('register_student'))
         elif isteacher is None and 'T' in nid:
             session['username'] = nid
-            return render_template('register_teacher.html')
+            return redirect(url_for('reg_student'))
         return 'That NID already exists!'
 
     return render_template('register.html')
+
+@app.route('/register/student', methods=['Get', 'POST'])
+def register_student():
+    if request.method == 'POST':
+        nid = session.get('username')
+        if nid is not None and 'D' in nid:
+            server.insert_student(nid, request.form['Name'], request.form['Dept'], int(request.form['Grade']), float(request.form['Average']), int(request.form['Rank']), request.form['Sex'], request.form['Residence'])
+            return redirect(url_for('index'))
+        return render_template('register_student.html')
+
+
+    return render_template('register_student.html')
 
 
 if __name__ == "__main__":
