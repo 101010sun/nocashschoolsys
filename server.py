@@ -28,7 +28,7 @@ def insert_organization(nid, organname):
     data = {'NID': nid, 'OrganName': organname}
     col_organization.insert_one(data)
 
-def insert_active(activename, average, credit, rank):
+def insert_active(activename, credit):
     data = {'ActiveName': activename, 'Credit': credit}
     col_active.insert_one(data)
 # find

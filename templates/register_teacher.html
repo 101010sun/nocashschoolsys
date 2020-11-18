@@ -32,7 +32,7 @@
     <title>老師註冊</title>
   </head>
   <body>
-    <form method="POST" action="{{ url_for('reg_student') }}">
+    <form method="POST" action="{{ url_for('register_teacher') }}">
       <label>姓名：<input type="text" name="Name"><br></label>
       <label>系別：<select name = "Dept">
         <option>請輸入系別</option>
@@ -74,7 +74,7 @@
         </select><br></label>
         <br>
         <button type="submit" class="btn btn-primary">提交</button>
-      </form>
+    </form>
     </div>
   </body>
 </html>

@@ -15,13 +15,14 @@ mongo = PyMongo(app)
 @app.route('/', methods=['GET','POST'])
 def index():
     if 'username' in session:
-        return 'You are logged in as ' + session['username']
-
+        return render_template('login.html')
     return render_template('login.html')
+
+@app.route('/logout', methods=['GET','POST'])
 def logout():
     if request.method == 'POST':
-        session['username'] = False
-
+        session['username'] =  False
+        return render_template('login.html')
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -33,9 +34,11 @@ def login():
         isteacher = teacher.find_one({'NID': nid})
         if isstudent is not None or isteacher is not None:
             session['username'] = nid
-            return render_template('home_page.html')
+            return render_template('home_page.html', nid = nid)
         return render_template('login.html')
     return redirect(url_for('index'))
+
+
 
 @app.route('/register', methods=['Get', 'POST'])
 def register():
@@ -50,7 +53,7 @@ def register():
             return redirect(url_for('register_student'))
         elif isteacher is None and 'T' in nid:
             session['username'] = nid
-            return redirect(url_for('reg_student'))
+            return redirect(url_for('register_teacher'))
         return 'That NID already exists!'
 
     return render_template('register.html')
@@ -63,10 +66,28 @@ def register_student():
             server.insert_student(nid, request.form['Name'], request.form['Dept'], int(request.form['Grade']), float(request.form['Average']), int(request.form['Rank']), request.form['Sex'], request.form['Residence'])
             return redirect(url_for('index'))
         return render_template('register_student.html')
-
-
     return render_template('register_student.html')
 
+@app.route('/register/teacher', methods=['Get', 'POST'])
+def register_teacher():
+    if request.method == 'POST':
+        nid = session.get('username')
+        if nid is not None and 'T' in nid:
+            server.insert_teacher(nid, request.form['Name'], request.form['Dept'])
+            return redirect(url_for('index'))
+        return 'session is null' #render_template('register_teacher.html')
+
+    return render_template('register_teacher.html')
+
+@app.route('/activity_teacher', methods=['Get', 'POST'])
+def activity_teacher():
+    if request.method == 'POST':
+        nid = session.get('username')
+        if nid is not None:
+            server.insert_active(request.form['ActiveName'], int(request.form['Credit']))
+            return render_template('activity_teacher.html')
+        return redirect(url_for('login'))
+    return render_template('activity_teacher.html')
 
 if __name__ == "__main__":
     app.run(host ='127.0.0.1')
