@@ -119,11 +119,27 @@ def activity_student():
 @app.route('/moneybag', methods=['Get','POST'])
 def moneybag():
     nid = session.get('username')
-    if nid is not None:
+    if nid is not None and 'T' in nid:
+        return redirect(url_for('moneybag_teacher'))
+    elif nid is not None and 'D' in nid:
+        return redirect(url_for('moneybag_student'))   
+    return render_template('home_page.html', nid = nid)
+
+@app.route('/moneybag_student', methods=['Get','POST'])
+def moneybag_student():
+    nid = session.get('username')
+    if nid is not None: 
         money = server.find_money(nid)
-        return render_template('moneybag.html', nid = nid, money = money)    
+        return render_template('moneybag_student.html', nid = nid, money = money)
     return redirect(url_for('login'))
 
+@app.route('/moneybag_teacher', methods=['Get','POST'])
+def moneybag_teacher():
+    nid = session.get('username')
+    if nid is not None: 
+        money = server.find_money(nid)
+        return render_template('moneybag_teacher.html', nid = nid, money = money)
+    return redirect(url_for('login'))
 
 if __name__ == "__main__":
     app.run(host ='127.0.0.1')
