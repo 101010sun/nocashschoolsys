@@ -71,6 +71,7 @@ def register_student():
         nid = session.get('username')
         if nid is not None and 'D' in nid:
             server.insert_student(nid, request.form['Name'], request.form['Dept'], int(request.form['Grade']), float(request.form['Average']), int(request.form['Rank']), request.form['Sex'], request.form['Residence'])
+            server.insert_stmoney(nid)
             return redirect(url_for('index'))
         return render_template('register_student.html')
     return render_template('register_student.html')
@@ -81,9 +82,9 @@ def register_teacher():
         nid = session.get('username')
         if nid is not None and 'T' in nid:
             server.insert_teacher(nid, request.form['Name'], request.form['Dept'])
+            server.insert_temoney(nid)
             return redirect(url_for('index'))
-        return 'session is null' #render_template('register_teacher.html')
-
+        return render_template('register_teacher.html')
     return render_template('register_teacher.html')
 
 @app.route('/activity', methods=['Get', 'POST'])
@@ -119,7 +120,8 @@ def activity_student():
 def moneybag():
     nid = session.get('username')
     if nid is not None:
-        return render_template('moneybag.html')    
+        money = server.find_money(nid)
+        return render_template('moneybag.html', nid = nid, money = money)    
     return redirect(url_for('login'))
 
 
