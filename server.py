@@ -11,13 +11,13 @@ col_organization = db.organization
 col_student = db.student
 col_teacher = db.teacher
 col_chooseactive = db.chooseactive
-col_moneyhistory = db.moneyhistory
+col_moneybag = db.moneybag
 #connect error or not
 col_active.stats
 col_organization.stats
 col_student.stats
 col_teacher.stats
-col_moneyhistory.stats
+col_moneybag.stats
 col_chooseactive.stats
 # insert
 def insert_teacher(nid, name, dept):
@@ -38,11 +38,11 @@ def insert_active(activename, credit):
 
 def insert_stmoney(nid):
     data = {'NID': nid, 'Money': int(0)}
-    col_moneyhistory.insert_one(data)
+    col_moneybag.insert_one(data)
 
 def insert_temoney(nid):
     data = {'NID': nid, 'Money': int(100)}
-    col_moneyhistory.insert_one(data)
+    col_moneybag.insert_one(data)
 
 # find
 def find_teacher():
@@ -73,5 +73,5 @@ def find_organization():
     return(data)
 
 def find_money(nid):
-    cursor = col_moneyhistory.find_one({'NID': nid})
+    cursor = col_moneybag.find_one({'NID': nid})
     return(cursor['Money'])
