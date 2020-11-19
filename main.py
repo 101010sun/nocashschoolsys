@@ -38,7 +38,14 @@ def login():
         return render_template('login.html')
     return redirect(url_for('index'))
 
-
+@app.route('/home_page', methods=['GET','POST'])
+def home_page():
+    nid = session.get('username')
+    if request.method == 'POST':
+        if nid is not None: 
+            return render_template('home_page.html', nid = nid)
+        return render_template('longin')
+    return render_template('home_page.html', nid = nid)
 
 @app.route('/register', methods=['Get', 'POST'])
 def register():
@@ -79,6 +86,16 @@ def register_teacher():
 
     return render_template('register_teacher.html')
 
+@app.route('/activity', methods=['Get', 'POST'])
+def activity():
+    nid = session.get('username')
+    if nid is not None and 'T' in nid:
+        return redirect(url_for('activity_teacher'))
+    elif nid is not None and 'D' in nid:
+        return redirect(url_for('activity_student'))
+    return render_template('home_page.html', nid = nid)
+
+
 @app.route('/activity_teacher', methods=['Get', 'POST'])
 def activity_teacher():
     if request.method == 'POST':
@@ -88,6 +105,23 @@ def activity_teacher():
             return render_template('activity_teacher.html')
         return redirect(url_for('login'))
     return render_template('activity_teacher.html')
+
+@app.route('/activity_student', methods=['Get', 'POST'])
+def activity_student():
+    if request.method == 'POST':
+        nid = session.get('username')
+        if nid is not None:
+            return render_template('activity_student.html')
+        return redirect(url_for('login'))
+    return render_template('activity_student.html')
+
+@app.route('/moneybag', methods=['Get','POST'])
+def moneybag():
+    nid = session.get('username')
+    if nid is not None:
+        return render_template('moneybag.html')    
+    return redirect(url_for('login'))
+
 
 if __name__ == "__main__":
     app.run(host ='127.0.0.1')

@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>錢包</title>
+    <header>錢包</header>
   </head>
 
   <body>
-      <a href="register">註冊</a>
-    <form method="POST" action="{{ url_for('login') }}">
-      NID：<input type="text" name="NID">
-      <button type="submit">提交</button>
-    </form>
+    <h3>金額</h3>
+    <label>{{name}}</label>
+    <a href="home_page">返回</a>
   </body>
 </html>

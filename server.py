@@ -47,6 +47,13 @@ def find_active():
     data = [d for d in cursor]
     return(data)
 
+def find_active_num():
+    count = int(0)
+    cursor = col_active.find({})
+    for d in cursor:
+        count +=1
+    return(count)
+
 def find_organization():
     cursor = col_organization.find({})
     data = [d for d in cursor]
