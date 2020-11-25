@@ -74,7 +74,7 @@ def register_student():
             server.insert_student(nid, request.form['Name'], request.form['Dept'], int(request.form['Grade']), request.form['Sex'], request.form['Residence'])
             server.create_moneybag(nid) #create bag
             data = time.strftime("%Y-%m-%d",time.localtime()) #format time
-            server.insert_money("None", nid, "None",  data, 10, 1)
+            server.insert_money2(nid,  data, 10, 1)
             return redirect(url_for('index'))
         return render_template('register_student.html')
     return render_template('register_student.html')
@@ -85,7 +85,9 @@ def register_teacher():
         nid = session.get('username')
         if nid is not None and 'T' in nid:
             server.insert_teacher(nid, request.form['Name'], request.form['Dept'])
-            server.insert_temoney(nid)
+            server.create_moneybag(nid) #create bag
+            data = time.strftime("%Y-%m-%d",time.localtime()) #format time
+            server.insert_money2(nid,  data, 1000, 1)
             return redirect(url_for('index'))
         return render_template('register_teacher.html')
     return render_template('register_teacher.html')
@@ -102,22 +104,24 @@ def activity():
 
 @app.route('/activity_teacher', methods=['Get', 'POST'])
 def activity_teacher():
+    record = server.find_active() #get activity record from db
     if request.method == 'POST':
         nid = session.get('username')
         if nid is not None:
-            server.insert_active(request.form['ActiveName'], int(request.form['Credit']))
-            return render_template('activity_teacher.html')
+            server.insert_active(request.form['ActiveName'], nid, int(request.form['Credit']))
+            return redirect(url_for('activity_teacher'))
         return redirect(url_for('login'))
-    return render_template('activity_teacher.html')
+    return render_template('activity_teacher.html', record = record)
 
 @app.route('/activity_student', methods=['Get', 'POST'])
 def activity_student():
+    record = server.find_active() #get activity record from db
     if request.method == 'POST':
         nid = session.get('username')
         if nid is not None:
-            return render_template('activity_student.html')
+            return redirect(url_for('activity_student'))
         return redirect(url_for('login'))
-    return render_template('activity_student.html')
+    return render_template('activity_student.html', record = record)
 
 @app.route('/moneybag', methods=['Get','POST'])
 def moneybag():

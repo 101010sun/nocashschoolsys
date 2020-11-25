@@ -8,11 +8,28 @@
   </head>
 
   <body>
-    <h3>金額</h3>
+    <h3>點數</h3>
     <label>{{nid}}: ${{money}}</label><br>
-    <button>1點</button>
-    <button>2點</button>
-    <button>3點</button><br>
+    <h3>歷史紀錄</h3>
+
+    <table border="1">
+      <tr>
+        <th>日期</th>
+        <th>課程名稱</th>
+        <th>學生</th>
+        <th>點數</th>
+        <th>備註</th>
+      </tr>
+      {% for i in record %}
+        <tr>
+          <td>{{i['Data']}} </td>
+          <td>{{i['ANID']}} </td>
+          <td>{{i['TNID']}} </td>
+          <td>{{i['Get']}} </td>
+          <td>{{i['Reason']}} </td>
+        </tr>
+      {% endfor %}
+    </table>
     <a href="home_page">返回</a>
   </body>
 </html>

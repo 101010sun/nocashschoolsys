@@ -15,7 +15,22 @@
       <button type="submit">新增</button>
     </form>
     <h3>活動列表</h3>
-    
+
+    <table border="1">
+      <tr>
+        <th>活動名稱</th>
+        <th>老師</th>
+        <th>學分</th>
+      </tr>
+      {% for i in record %}
+        <tr>
+          <td>{{i['ActiveName']}} </td>
+          <td>{{i['TNID']}} </td>
+          <td>{{i['Credit']}} </td>
+        </tr>
+      {% endfor %}
+    </table>
+
     <a href="home_page">返回</a>
   </body>
 </html>

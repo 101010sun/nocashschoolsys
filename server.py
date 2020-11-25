@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-
+import time
 #local host
 conn = MongoClient()
 #database
@@ -28,8 +28,8 @@ def insert_student(nid, name, dept, grade, sex, residence):
     data = {'NID': nid, 'Name': name, 'Dept': dept, 'Grade': grade, 'Sex': sex, 'Residence': residence}
     col_student.insert_one(data)
 
-def insert_active(activename, credit):
-    data = {'ActiveName': activename, 'Credit': credit}
+def insert_active(activename, tnid, credit):
+    data = {'ActiveName': str(activename), 'TNID': str(tnid), 'Credit': int(credit)}
     col_active.insert_one(data)
 
 def create_moneybag(nid):
@@ -37,10 +37,13 @@ def create_moneybag(nid):
     col_moneybag.insert_one(data)
 
 def insert_money(tnid,snid,anid,data,get,reason):
-    data = {'TNID': tnid, 'SNID': snid, 'ANID': anid, 'Data': data, 'Get': int(get), 'Reason': int(reason)}
+    data = {'TNID': str(tnid), 'SNID': str(snid),'ANID': str(anid), 'Data': str(data), 'Get': int(get), 'Reason': int(reason)}
     col_moneyhistory.insert_one(data) #add history
-    if(tnid != "None"):
-        update_money(tnid, int(get)*-1) #cut money from teacher's moneybag
+    update_money(tnid, int(get)*-1) #cut money from teacher's moneybag
+    update_money(snid, int(get)) #student's moneybag add money
+def insert_money2(snid,data,get,reason):
+    data = {'SNID': str(snid), 'Data': str(data), 'Get': int(get), 'Reason': int(reason)}
+    col_moneyhistory.insert_one(data)
     update_money(snid, int(get)) #student's moneybag add money
 
 
@@ -56,12 +59,10 @@ def find_student():
     data = [d for d in cursor]
     return(data)
 
-def find_active_num():
-    count = int(0)
+def find_active():
     cursor = col_active.find({})
-    for d in cursor:
-        count +=1
-    return(count)
+    data = [d for d in cursor]
+    return(data)
 
 def find_money(nid):
     cursor = col_moneybag.find_one({'NID': nid})
@@ -69,3 +70,4 @@ def find_money(nid):
 def update_money(nid,get):
     money = int(find_money(nid))
     col_moneybag.update_one(filter={'NID': nid}, update={'$inc': {'Money':get}})
+
