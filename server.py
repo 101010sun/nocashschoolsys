@@ -32,6 +32,10 @@ def insert_active(activename, tnid, credit):
     data = {'ActiveName': str(activename), 'TNID': str(tnid), 'Credit': int(credit)}
     col_active.insert_one(data)
 
+def choose_active(nid,tnid,aid):
+    data = {'NID': str(nid), 'TNID': str(tnid), 'AID': str(aid)}
+    col_chooseactive.insert_one(data)
+
 def create_moneybag(nid):
     data = {'NID': nid, 'Money': int(0)}
     col_moneybag.insert_one(data)
@@ -45,8 +49,10 @@ def insert_money2(snid,data,get,reason):
     data = {'SNID': str(snid), 'Data': str(data), 'Get': int(get), 'Reason': int(reason)}
     col_moneyhistory.insert_one(data)
     update_money(snid, int(get)) #student's moneybag add money
-
-
+def insert_money3(tnid,data,get,reason):
+    data = {'TNID': str(tnid), 'Data': str(data), 'Get': int(get), 'Reason': int(reason)}
+    col_moneyhistory.insert_one(data)
+    update_money(tnid, int(get)) #student's moneybag add money
 
 # find
 def find_teacher():
@@ -61,6 +67,19 @@ def find_student():
 
 def find_active():
     cursor = col_active.find({})
+    data = [d for d in cursor]
+    return(data)
+def find_teactive(tnid):
+    cursor = col_active.find({"TNID": str(tnid)})
+    data = [d for d in cursor]
+    return(data)
+
+def find_stmoneyhistory(snid):
+    cursor = col_moneyhistory.find({"SNID": str(snid)})
+    data = [d for d in cursor]
+    return(data)
+def find_temoneyhistory(tnid):
+    cursor = col_moneyhistory.find({"TNID": str(tnid)})
     data = [d for d in cursor]
     return(data)
 

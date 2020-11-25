@@ -16,20 +16,24 @@
     </form>
     <h3>活動列表</h3>
 
-    <table border="1">
-      <tr>
-        <th>活動名稱</th>
-        <th>老師</th>
-        <th>學分</th>
-      </tr>
-      {% for i in record %}
+    <form method="POST" action="{{ url_for('register_student') }}">
+      <table border="1">
         <tr>
-          <td>{{i['ActiveName']}} </td>
-          <td>{{i['TNID']}} </td>
-          <td>{{i['Credit']}} </td>
+          <th>活動名稱</th>
+          <th>老師</th>
+          <th>學分</th>
+          <th>學生清單</th>
         </tr>
-      {% endfor %}
-    </table>
+        {% for i in record %}
+          <tr>
+            <td>{{i['ActiveName']}} </td>
+            <td>{{i['TNID']}} </td>
+            <td>{{i['Credit']}} </td>
+            <td><button type="submit">檢視</button></td>
+          </tr>
+        {% endfor %}
+      </table>
+    </form>
 
     <a href="home_page">返回</a>
   </body>

@@ -5,22 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>活動</title>
     <header>活動</header>
+
+    <script src="http://www.w3school.com.cn/jquery/jquery.js"></script>
+    <script type="text/javascript">
+      function getTdValue(obj){ 
+        var x = $(obj).parent().parent().find("td");
+        result0 = x.eq(0).text(); //active name
+        result1 = x.eq(1).text(); //teacher id
+        var data={"ActivityName": result0, "TNID": result1};
+        $.ajax({
+          type: 'POST',
+          url:"/activity_student",
+          data:JSON.stringify(data), //轉化字串
+          contentType: 'application/json; charset=UTF-8',
+          success: function(data){
+            addselect(data);
+          }
+        })
+      };
+    </script>
+
   </head>
 
   <body>
     <h3>活動列表</h3>
-    
+
     <table border="1">
       <tr>
         <th>活動名稱</th>
         <th>老師</th>
         <th>學分</th>
+        <th>報名活動</th>
       </tr>
       {% for i in record %}
         <tr>
           <td>{{i['ActiveName']}} </td>
           <td>{{i['TNID']}} </td>
           <td>{{i['Credit']}} </td>
+          <td><button type="submit" onclick="getTdValue(this)">報名</button></td>
         </tr>
       {% endfor %}
     </table>
