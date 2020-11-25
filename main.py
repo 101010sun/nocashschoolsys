@@ -104,9 +104,9 @@ def activity():
 
 @app.route('/activity_teacher', methods=['Get', 'POST'])
 def activity_teacher():
-    record = server.find_active() #get activity record from db
+    nid = session.get('username')
+    record = server.find_teactive(nid) #get self activity record from db
     if request.method == 'POST':
-        nid = session.get('username')
         if nid is not None:
             server.insert_active(request.form['ActiveName'], nid, int(request.form['Credit']))
             return redirect(url_for('activity_teacher'))
@@ -119,6 +119,7 @@ def activity_student():
     if request.method == 'POST':
         nid = session.get('username')
         if nid is not None:
+            server.choose_active(nid,request.get_json()['ActivityName'],request.get_json()['TNID'])
             return redirect(url_for('activity_student'))
         return redirect(url_for('login'))
     return render_template('activity_student.html', record = record)
@@ -137,7 +138,8 @@ def moneybag_student():
     nid = session.get('username')
     if nid is not None: 
         money = server.find_money(nid)
-        return render_template('moneybag_student.html', nid = nid, money = money)
+        record = server.find_stmoneyhistory(nid)
+        return render_template('moneybag_student.html', nid = nid, money = money ,record = record)
     return redirect(url_for('login'))
 
 @app.route('/moneybag_teacher', methods=['Get','POST'])
@@ -145,7 +147,8 @@ def moneybag_teacher():
     nid = session.get('username')
     if nid is not None: 
         money = server.find_money(nid)
-        return render_template('moneybag_teacher.html', nid = nid, money = money)
+        record  = server.find_temoneyhistory(nid)
+        return render_template('moneybag_teacher.html', nid = nid, money = money ,record = record)
     return redirect(url_for('login'))
 
 if __name__ == "__main__":
