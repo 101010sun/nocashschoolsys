@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request, session, redirect
 from flask_pymongo import PyMongo
 import server
 import os
+import time
 
 app = Flask(__name__)
 # open debugger
@@ -70,8 +71,10 @@ def register_student():
     if request.method == 'POST':
         nid = session.get('username')
         if nid is not None and 'D' in nid:
-            server.insert_student(nid, request.form['Name'], request.form['Dept'], int(request.form['Grade']), float(request.form['Average']), int(request.form['Rank']), request.form['Sex'], request.form['Residence'])
-            server.insert_stmoney(nid)
+            server.insert_student(nid, request.form['Name'], request.form['Dept'], int(request.form['Grade']), request.form['Sex'], request.form['Residence'])
+            server.create_moneybag(nid) #create bag
+            data = time.strftime("%Y-%m-%d",time.localtime()) #format time
+            server.insert_money("None", nid, "None",  data, 10, 1)
             return redirect(url_for('index'))
         return render_template('register_student.html')
     return render_template('register_student.html')
