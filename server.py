@@ -74,6 +74,16 @@ def find_teactive(tnid):
     data = [d for d in cursor]
     return(data)
 
+def find_stchooseactive(nid):
+    cursor = col_chooseactive.find({"NID":str(nid)})
+    data = [d for d in cursor]
+    return(data)
+
+def find_techooseactive(nid,aid):
+    cursor = col_chooseactive.find({"TNID":str(nid), "AID":str(aid)})
+    data = [d for d in cursor]
+    return(data)
+
 def find_stmoneyhistory(snid):
     cursor = col_moneyhistory.find({"SNID": str(snid)})
     data = [d for d in cursor]

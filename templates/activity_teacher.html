@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>活動</title>
     <header>活動</header>
+    <script src="http://www.w3school.com.cn/jquery/jquery.js"></script>
+    <script type="text/javascript">
+      function getTdValue(obj){ 
+        var x = $(obj).parent().parent().find("td");
+        result = x.eq(0).text(); //active name
+        var data={"AID": result};
+        $.ajax({
+          type: 'POST',
+          url:"see_student",
+          data:JSON.stringify(data), //轉化字串
+          contentType: 'application/json; charset=UTF-8',
+          success: function(data){
+            addselect(data);
+          }
+        })
+      };
+    </script>
   </head>
 
   <body>
@@ -16,7 +33,7 @@
     </form>
     <h3>活動列表</h3>
 
-    <form method="POST" action="{{ url_for('register_student') }}">
+    <form method="POST" action="{{ url_for('see_student') }}">
       <table border="1">
         <tr>
           <th>活動名稱</th>
@@ -26,10 +43,10 @@
         </tr>
         {% for i in record %}
           <tr>
-            <td>{{i['ActiveName']}} </td>
-            <td>{{i['TNID']}} </td>
-            <td>{{i['Credit']}} </td>
-            <td><button type="submit">檢視</button></td>
+            <td>{{i['ActiveName']}}</td>
+            <td>{{i['TNID']}}</td>
+            <td>{{i['Credit']}}</td>
+            <td><button type="submit" onclick="getTdValue(this)">檢視</button></td>
           </tr>
         {% endfor %}
       </table>

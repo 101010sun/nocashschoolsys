@@ -101,7 +101,6 @@ def activity():
         return redirect(url_for('activity_student'))
     return render_template('home_page.html', nid = nid)
 
-
 @app.route('/activity_teacher', methods=['Get', 'POST'])
 def activity_teacher():
     nid = session.get('username')
@@ -115,14 +114,24 @@ def activity_teacher():
 
 @app.route('/activity_student', methods=['Get', 'POST'])
 def activity_student():
+    nid = session.get('username')
     record = server.find_active() #get activity record from db
+    record2 = server.find_stchooseactive(nid) #get activity record from db
     if request.method == 'POST':
-        nid = session.get('username')
         if nid is not None:
-            server.choose_active(nid,request.get_json()['ActivityName'],request.get_json()['TNID'])
+            server.choose_active(nid,request.get_json()['TNID'],request.get_json()['ActivityName'])
             return redirect(url_for('activity_student'))
         return redirect(url_for('login'))
-    return render_template('activity_student.html', record = record)
+    return render_template('activity_student.html', record = record, record2 = record2)
+
+@app.route('/see_student', methods=['Get', 'POST'])
+def see_student():
+    nid = session.get('username')
+    aid = request.get_json()['AID'] #bug---------------------------------------------!
+    record = server.find_techooseactive(nid,aid)
+    if request.method == 'POST':
+        return render_template('see_student.html',record = record)
+    return render_template('see_student.html',record = record)
 
 @app.route('/moneybag', methods=['Get','POST'])
 def moneybag():

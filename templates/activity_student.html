@@ -28,8 +28,21 @@
   </head>
 
   <body>
-    <h3>活動列表</h3>
+    <h3>已報名活動</h3>
+    <table border="1">
+      <tr>
+        <th>老師</th>
+        <th>活動名稱</th>
+      </tr>
+      {% for i in record2 %}
+        <tr>
+          <td>{{i['TNID']}}</td>
+          <td>{{i['AID']}}</td>
+        </tr>
+      {% endfor %}
+    </table>
 
+    <h3>活動列表</h3>
     <table border="1">
       <tr>
         <th>活動名稱</th>
@@ -39,9 +52,9 @@
       </tr>
       {% for i in record %}
         <tr>
-          <td>{{i['ActiveName']}} </td>
-          <td>{{i['TNID']}} </td>
-          <td>{{i['Credit']}} </td>
+          <td>{{i['ActiveName']}}</td>
+          <td>{{i['TNID']}}</td>
+          <td>{{i['Credit']}}</td>
           <td><button type="submit" onclick="getTdValue(this)">報名</button></td>
         </tr>
       {% endfor %}

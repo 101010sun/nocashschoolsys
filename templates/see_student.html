@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>已報名學生</title>
+    <header>已報名學生</header>
+  </head>
+
+  <body>
+    <table border="1">
+      <tr>
+        <th>學生</th>
+        <th>給點</th>
+      </tr>
+      {% for i in record %}
+        <tr>
+          <td>{{i['NID']}}</td>
+          <td><button>送</button></td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <a href="activity_teacher">返回</a>
+  </body>
+</html>
