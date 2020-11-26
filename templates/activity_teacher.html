@@ -13,13 +13,14 @@
         var data={"AID": result};
         $.ajax({
           type: 'POST',
-          url:"see_student",
+          url:"/see_student",
           data:JSON.stringify(data), //轉化字串
           contentType: 'application/json; charset=UTF-8',
           success: function(data){
             addselect(data);
           }
         })
+        $(location).prop('href', 'see_student')
       };
     </script>
   </head>
@@ -33,24 +34,22 @@
     </form>
     <h3>活動列表</h3>
 
-    <form method="POST" action="{{ url_for('see_student') }}">
-      <table border="1">
+    <table border="1">
+      <tr>
+        <th>活動名稱</th>
+        <th>老師</th>
+        <th>學分</th>
+        <th>學生清單</th>
+      </tr>
+      {% for i in record %}
         <tr>
-          <th>活動名稱</th>
-          <th>老師</th>
-          <th>學分</th>
-          <th>學生清單</th>
+          <td>{{i['ActiveName']}}</td>
+          <td>{{i['TNID']}}</td>
+          <td>{{i['Credit']}}</td>
+          <td><button type="submit" onclick="getTdValue(this)">檢視</button></td>
         </tr>
-        {% for i in record %}
-          <tr>
-            <td>{{i['ActiveName']}}</td>
-            <td>{{i['TNID']}}</td>
-            <td>{{i['Credit']}}</td>
-            <td><button type="submit" onclick="getTdValue(this)">檢視</button></td>
-          </tr>
-        {% endfor %}
-      </table>
-    </form>
+      {% endfor %}
+    </table>
 
     <a href="home_page">返回</a>
   </body>

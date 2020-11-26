@@ -127,7 +127,7 @@ def activity_student():
 @app.route('/see_student', methods=['Get', 'POST'])
 def see_student():
     nid = session.get('username')
-    aid = request.get_json()['AID'] #bug---------------------------------------------!
+    aid = request.get_json()['AID']
     record = server.find_techooseactive(nid,aid)
     if request.method == 'POST':
         return render_template('see_student.html',record = record)
