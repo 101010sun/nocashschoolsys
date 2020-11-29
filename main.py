@@ -14,13 +14,6 @@ app.config['MONGO_DBNAME'] = 'nocashschoolsys'
 app.config['MONGO_URI'] = 'mongodb://localhost:27017/nocashschoolsys'
 app.config['SECRET_KEY'] = os.urandom(24)
 
-img = qrcode.make('') # QRCode資訊 
-img.save("QRcode.png") # 儲存圖片 1點
-img = qrcode.make('') 
-img.save("QRcode2點.png") # 儲存圖片2點
-img = qrcode.make('') # QRCode資訊
-img.save("QRcode3點.png") # 儲存圖片
-
 mongo = PyMongo(app)
 
 @app.route('/', methods=['GET','POST'])
@@ -175,7 +168,14 @@ def return_img_stream(img_local_path):
  
 @app.route('/qrcode')
 def qrcode():
-    img_path = 'D:/python/無現金校園系統/nocashschoolsys/form/img/QRcode.png' #qrcode於本機端的位置
+    sendNID = request.cookies.get('sendNID')
+    reason = request.cookies.get('reason')
+    aid = request.cookies.get('AID')
+    tnid = session.get('username')
+    data = {'SNID': sendNID, 'TNID': tnid, 'AID': aid, 'reason': reason}
+    img = qrcode.make(data) # QRCode資訊 
+    img.save("QRcode.png") # 儲存圖片 1點
+    img_path = 'D:/python/無現金校園系統/nocashschoolsys/QRcode.png' #qrcode於本機端的位置
     img_stream = return_img_stream(img_path)
     return render_template('index.html',img_stream=img_stream)
  

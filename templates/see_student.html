@@ -10,8 +10,10 @@
       function getTdValue(obj){ 
         var x = $(obj).parent().parent().find("td");
         snid = x.eq(0).text(); //active name
+        reason = x.eq(1).find(':selected').val(); //active name
         document.cookie = "sendNID="+snid;
-        window.location.href = "send_point";
+        document.cookie = "reason="+reason;
+        window.location.href = "qrcode";
       };
     </script>
   </head>
@@ -20,11 +22,21 @@
     <table border="1">
       <tr>
         <th>學生</th>
+        <th>備註</th>
         <th>給點</th>
       </tr>
       {% for i in record %}
         <tr>
           <td>{{i['NID']}}</td>
+          <td>
+            <select>
+              <option value="2">點名</option>
+              <option value="3">課程互動</option>
+              <option value="4">準時交作業</option>
+              <option value="5">期中期末考成績優異</option>
+              <option value="6">小考成績優異</option>
+            </select>
+          </td>
           <td><button type="submit" onclick="getTdValue(this)">送</button></td>
         </tr>
       {% endfor %}
