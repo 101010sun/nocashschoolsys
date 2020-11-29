@@ -9,18 +9,9 @@
     <script type="text/javascript">
       function getTdValue(obj){ 
         var x = $(obj).parent().parent().find("td");
-        result = x.eq(0).text(); //active name
-        var data={"AID": result};
-        $.ajax({
-          type: 'POST',
-          url:"/see_student",
-          data:JSON.stringify(data), //轉化字串
-          contentType: 'application/json; charset=UTF-8',
-          success: function(data){
-            addselect(data);
-          }
-        })
-        $(location).prop('href', 'see_student')
+        aid = x.eq(0).text(); //active name
+        document.cookie = "AID="+aid;
+        window.location.href = "see_student";
       };
     </script>
   </head>
