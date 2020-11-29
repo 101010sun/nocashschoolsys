@@ -3,6 +3,9 @@ from flask_pymongo import PyMongo
 import server
 import os
 import time
+import base64
+import qrcode
+
 
 app = Flask(__name__)
 # open debugger
@@ -10,6 +13,13 @@ app.config['DEBUG'] = True
 app.config['MONGO_DBNAME'] = 'nocashschoolsys'
 app.config['MONGO_URI'] = 'mongodb://localhost:27017/nocashschoolsys'
 app.config['SECRET_KEY'] = os.urandom(24)
+
+img = qrcode.make('') # QRCode資訊 
+img.save("QRcode.png") # 儲存圖片 1點
+img = qrcode.make('') 
+img.save("QRcode2點.png") # 儲存圖片2點
+img = qrcode.make('') # QRCode資訊
+img.save("QRcode3點.png") # 儲存圖片
 
 mongo = PyMongo(app)
 
@@ -159,6 +169,21 @@ def moneybag_teacher():
         record  = server.find_temoneyhistory(nid)
         return render_template('moneybag_teacher.html', nid = nid, money = money ,record = record)
     return redirect(url_for('login'))
+
+def return_img_stream(img_local_path):
+    img_stream = ''
+    with open(img_local_path, 'rb') as img_f:
+        img_stream = img_f.read()
+        img_stream = base64.b64encode(img_stream).decode()
+    return img_stream
+ 
+ 
+@app.route('/qrcode')
+def hello_world():
+    img_path = 'D:/python/無現金校園系統/nocashschoolsys/QRcode.png'#qrcode於本機端的位置
+    img_stream = return_img_stream(img_path)
+    return render_template('index.html',img_stream=img_stream)
+ 
 
 if __name__ == "__main__":
     app.run(host ='127.0.0.1')
