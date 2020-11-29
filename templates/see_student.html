@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>已報名學生</title>
     <header>已報名學生</header>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      function getTdValue(obj){ 
+        var x = $(obj).parent().parent().find("td");
+        snid = x.eq(0).text(); //active name
+        document.cookie = "sendNID="+snid;
+        window.location.href = "send_point";
+      };
+    </script>
   </head>
 
   <body>
@@ -16,7 +25,7 @@
       {% for i in record %}
         <tr>
           <td>{{i['NID']}}</td>
-          <td><button>送</button></td>
+          <td><button type="submit" onclick="getTdValue(this)">送</button></td>
         </tr>
       {% endfor %}
     </table>

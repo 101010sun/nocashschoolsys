@@ -173,10 +173,9 @@ def return_img_stream(img_local_path):
         img_stream = base64.b64encode(img_stream).decode()
     return img_stream
  
- 
 @app.route('/qrcode')
-def hello_world():
-    img_path = 'D:/python/無現金校園系統/nocashschoolsys/QRcode.png'#qrcode於本機端的位置
+def qrcode():
+    img_path = 'D:/python/無現金校園系統/nocashschoolsys/form/img/QRcode.png' #qrcode於本機端的位置
     img_stream = return_img_stream(img_path)
     return render_template('index.html',img_stream=img_stream)
  
