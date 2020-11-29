@@ -172,8 +172,9 @@ def qrcode():
     reason = request.cookies.get('reason')
     aid = request.cookies.get('AID')
     tnid = session.get('username')
-    data = {'SNID': sendNID, 'TNID': tnid, 'AID': aid, 'reason': reason}
-    img = qrcode.make(data) # QRCode資訊 
+    
+    data = sendNID+ ' '+ tnid+ ' '+ aid+ ' '+ reason
+    img = qrcode.make(data=data) # QRCode資訊 
     img.save("QRcode.png") # 儲存圖片 1點
     img_path = 'D:/python/無現金校園系統/nocashschoolsys/QRcode.png' #qrcode於本機端的位置
     img_stream = return_img_stream(img_path)
