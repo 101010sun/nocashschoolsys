@@ -165,20 +165,42 @@ def return_img_stream(img_local_path):
         img_stream = img_f.read()
         img_stream = base64.b64encode(img_stream).decode()
     return img_stream
- 
+
+qr = qrcode.QRCode(version=None, error_correction=qrcode.constants.ERROR_CORRECT_Q,box_size=10, border=1,)
+
 @app.route('/qrcode')
 def qrcode():
     sendNID = request.cookies.get('sendNID')
     reason = request.cookies.get('reason')
     aid = request.cookies.get('AID')
     tnid = session.get('username')
-    
-    img = qrcode.make('127.0.0.1:5000/') # QRCode資訊 
+    url = 'http://127.0.0.1:5000/qrcode_getpoint'
+    url += '?SNID=\''+sendNID+'\'&'+'TNID=\''+tnid+'\'&'+'AID=\''+aid+'\'&'+'reason='+str(reason)
+    qr.add_data(url) 
+    qr.make(fit=True)
+    img = qr.make_image()
     img.save("QRcode.png") # 儲存圖片 1點
     img_path = 'D:/python/無現金校園系統/nocashschoolsys/QRcode.png' #qrcode於本機端的位置
     img_stream = return_img_stream(img_path)
     return render_template('index.html',img_stream=img_stream)
- 
+
+@app.route('/qrcode_getpoint', methods=['GET','POST'])
+def qrcode_getpoint():
+    snid = request.args.get('SNID', default=None, type=str)
+    tnid = request.args.get('TNID', default=None, type=str)
+    aid = request.args.get('AID', default=None, type=str)
+    reason = request.args.get('reason', default=0, type=int)
+    if request.method == 'POST':
+        student = mongo.db.student
+        teacher = mongo.db.teacher
+        nid = request.form['NID'].upper()
+        isstudent = student.find_one({'NID': nid})
+        isteacher = teacher.find_one({'NID': nid})
+        if isstudent is not None or isteacher is not None:
+            session['username'] = nid
+            return render_template('home_page.html', nid = nid)
+        return render_template('login.html')
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.run(host ='127.0.0.1')

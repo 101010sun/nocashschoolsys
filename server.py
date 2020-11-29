@@ -99,4 +99,3 @@ def find_money(nid):
 def update_money(nid,get):
     money = int(find_money(nid))
     col_moneybag.update_one(filter={'NID': nid}, update={'$inc': {'Money':get}})
-
