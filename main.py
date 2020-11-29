@@ -19,7 +19,7 @@ mongo = PyMongo(app)
 @app.route('/', methods=['GET','POST'])
 def index():
     if 'username' in session:
-        return render_template('login.html')
+        return render_template('home_page.html', nid = session.get('username'))
     return render_template('login.html')
 
 @app.route('/logout', methods=['GET','POST'])
@@ -175,7 +175,7 @@ def qrcode():
     aid = request.cookies.get('AID')
     tnid = session.get('username')
     url = 'http://127.0.0.1:5000/qrcode_getpoint'
-    url += '?SNID=\''+sendNID+'\'&'+'TNID=\''+tnid+'\'&'+'AID=\''+aid+'\'&'+'reason='+str(reason)
+    url += '?SNID='+sendNID+'&'+'TNID='+tnid+'&'+'AID='+aid+'&'+'reason='+str(reason)
     qr.add_data(url) 
     qr.make(fit=True)
     img = qr.make_image()
@@ -190,17 +190,16 @@ def qrcode_getpoint():
     tnid = request.args.get('TNID', default=None, type=str)
     aid = request.args.get('AID', default=None, type=str)
     reason = request.args.get('reason', default=0, type=int)
+    data = time.strftime("%Y-%m-%d",time.localtime()) #format time
+    if reason == 2 or reason == 3: get = 1
+    elif reason == 4: get = 2
+    elif reason == 5: get = 5
+    else: get = 3
+    server.insert_money(tnid,snid,aid,data,get,reason)
+    session['username'] = snid
     if request.method == 'POST':
-        student = mongo.db.student
-        teacher = mongo.db.teacher
-        nid = request.form['NID'].upper()
-        isstudent = student.find_one({'NID': nid})
-        isteacher = teacher.find_one({'NID': nid})
-        if isstudent is not None or isteacher is not None:
-            session['username'] = nid
-            return render_template('home_page.html', nid = nid)
-        return render_template('login.html')
-    return redirect(url_for('index'))
+            return redirect(url_for('moneybag_student'))
+    return redirect(url_for('moneybag_student'))
 
 if __name__ == "__main__":
     app.run(host ='127.0.0.1')
