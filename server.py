@@ -86,11 +86,27 @@ def find_techooseactive(nid,aid):
 
 def find_stmoneyhistory(snid):
     cursor = col_moneyhistory.find({"SNID": str(snid)})
-    data = [d for d in cursor]
+    data = list()
+    for d in cursor:
+        data.append(d)
+        if d['Reason'] == 1: d['Reason'] = str('註冊')
+        elif d['Reason'] == 2: d['Reason'] = str('點名')
+        elif d['Reason'] == 3: d['Reason'] = str('課程互動')
+        elif d['Reason'] == 4: d['Reason'] = str('準時交作業')
+        elif d['Reason'] == 5: d['Reason'] = str('期中期末考試成績優異')
+        else: d['Reason'] = str('小考成績優異')
     return(data)
 def find_temoneyhistory(tnid):
     cursor = col_moneyhistory.find({"TNID": str(tnid)})
-    data = [d for d in cursor]
+    data = list()
+    for d in cursor:
+        data.append(d)
+        if d['Reason'] == 1: d['Reason'] = str('註冊')
+        elif d['Reason'] == 2: d['Reason'] = str('點名')
+        elif d['Reason'] == 3: d['Reason'] = str('課程互動')
+        elif d['Reason'] == 4: d['Reason'] = str('準時交作業')
+        elif d['Reason'] == 5: d['Reason'] = str('期中期末考試成績優異')
+        else: d['Reason'] = str('小考成績優異')
     return(data)
 
 def find_money(nid):
