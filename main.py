@@ -174,13 +174,13 @@ def qrcode():
     reason = request.cookies.get('reason')
     aid = request.cookies.get('AID')
     tnid = session.get('username')
-    url = 'http://127.0.0.1:5000/qrcode_getpoint'
-    url += '?SNID='+sendNID+'&'+'TNID='+tnid+'&'+'AID='+aid+'&'+'reason='+str(reason)
+    url = 'http://127.0.0.1:5000/qrcode_getpoint' + '?SNID='+sendNID+'&'+'TNID='+tnid+'&'+'AID='+aid+'&'+'reason='+str(reason)
+    qr.clear()
     qr.add_data(url) 
     qr.make(fit=True)
     img = qr.make_image()
     img.save("QRcode.png") # 儲存圖片 1點
-    img_path = 'D:/python/無現金校園系統/nocashschoolsys/QRcode.png' #qrcode於本機端的位置
+    img_path = 'D:/python/nocashschoolsys/QRcode.png' #qrcode於本機端的位置
     img_stream = return_img_stream(img_path)
     return render_template('index.html',img_stream=img_stream)
 
