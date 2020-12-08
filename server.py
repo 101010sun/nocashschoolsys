@@ -115,3 +115,19 @@ def find_money(nid):
 def update_money(nid,get):
     money = int(find_money(nid))
     col_moneybag.update_one(filter={'NID': nid}, update={'$inc': {'Money':get}})
+
+def find_chooseactive():
+    cursor = col_chooseactive.find({})
+    data = [d for d in cursor]
+    return(data)
+
+def find_moneybag():
+    cursor = col_moneybag.find({})
+    data = [d for d in cursor]
+    return(data)
+
+def find_moneyhistory():
+    cursor = col_moneyhistory.find({})
+    data = [d for d in cursor]
+    return(data)
+

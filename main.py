@@ -36,7 +36,9 @@ def login():
         nid = request.form['NID'].upper()
         isstudent = student.find_one({'NID': nid})
         isteacher = teacher.find_one({'NID': nid})
-        if isstudent is not None or isteacher is not None:
+        if nid == '0000':
+            return redirect(url_for('control'))
+        elif isstudent is not None or isteacher is not None:
             session['username'] = nid
             return render_template('home_page.html', nid = nid)
         return render_template('login.html')
@@ -200,6 +202,18 @@ def qrcode_getpoint():
     if request.method == 'POST':
             return redirect(url_for('moneybag_student'))
     return redirect(url_for('moneybag_student'))
+
+#這是控制台
+@app.route('/control', methods=['GET','POST'])
+def control():
+    reactive = server.find_active()
+    rechooseactive = server.find_chooseactive()
+    remoneybag = server.find_moneybag()
+    remoneyhistory = server.find_moneyhistory()
+    restudent = server.find_student()
+    reteacher = server.find_teacher()
+    return render_template('control.html', reactive = reactive, rechooseactive = rechooseactive, remoneybag = remoneybag, remoneyhistory = remoneyhistory, restudent = restudent, reteacher = reteacher)
+
 
 if __name__ == "__main__":
     app.run(host ='127.0.0.1')
